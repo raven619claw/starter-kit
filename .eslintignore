@@ -1,0 +1,12 @@
+bin/**
+.dev/**
+.build/**
+dev/**
+build/**
+tmp/**
+coverage/**
+.ebextensions/**
+.git/**
+node_modules/**
+inject-service-worker-script.js
+html.*.js

@@ -1,0 +1,89 @@
+{
+  "name": "react-starter-kit",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build:dev": " rm -rf ./.dev &&  export NODE_ENV=dev WATCH=true;  node scripts/build.js",
+    "build:prod": " rm -rf ./.build &&  export NODE_ENV=production; node scripts/build.js",
+    "start:dev": "export NODE_ENV=dev WATCH=true HOT_RELOAD=true; node scripts/start",
+    "start:dev:inspect": "export NODE_ENV=dev WATCH=true HOT_RELOAD=true INSPECT=true; node scripts/start",
+    "start:prod": "export NODE_ENV=production; node .build/server/server.js",
+    "lint-staged": "lint-staged",
+    "format": "./node_modules/.bin/prettier --write --single-quote --print-width=120",
+    "lint-all": "npm run format-all && npm run lint",
+    "format-all": "./node_modules/.bin/prettier --write --single-quote --print-width=120 \"**/*.{js,jsx}\"",
+    "lint": "./node_modules/eslint/bin/eslint.js . --ext .js --ext .jsx --fix || true"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.4.5",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-syntax-dynamic-import": "^7.2.0",
+    "@babel/preset-env": "^7.4.5",
+    "@babel/preset-react": "^7.0.0",
+    "assets-webpack-plugin": "^3.9.10",
+    "autoprefixer": "^9.6.0",
+    "babel-eslint": "^10.0.1",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-emotion": "^10.0.9",
+    "case-sensitive-paths-webpack-plugin": "^2.2.0",
+    "css-loader": "^2.1.1",
+    "del": "^4.1.1",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "eslint-plugin-import": "^2.17.3",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-prettier": "^3.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-react": "^7.13.0",
+    "file-loader": "^4.0.0",
+    "husky": "^2.4.0",
+    "ignore-loader": "^0.1.2",
+    "lint-staged": "^8.2.0",
+    "mini-css-extract-plugin": "^0.7.0",
+    "mini-css-extract-plugin-with-rtl": "^0.1.5",
+    "node-sass": "^4.12.0",
+    "nodemon": "^1.19.1",
+    "optimize-css-assets-webpack-plugin": "^5.0.1",
+    "postcss-loader": "^3.0.0",
+    "prettier": "^1.18.2",
+    "rimraf": "^2.6.3",
+    "sass-loader": "^7.1.0",
+    "url-loader": "^2.0.0",
+    "webpack": "^4.33.0",
+    "webpack-cli": "^3.3.3",
+    "webpack-dev-middleware": "^3.7.0",
+    "webpack-hot-middleware": "^2.25.0",
+    "webpack-manifest-plugin": "^2.0.4",
+    "webpack-rtl-plugin": "^2.0.0",
+    "webpack-shell-plugin": "^0.5.0",
+    "webpack-visualizer-plugin": "^0.1.11",
+    "workbox-webpack-plugin": "^4.3.1",
+    "write-file-webpack-plugin": "^4.5.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "chalk": "^2.4.2",
+    "cors": "^2.8.5",
+    "dotenv": "^8.0.0",
+    "express": "^4.17.1",
+    "express-manifest-helpers": "^0.6.0",
+    "path": "^0.12.7"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "eslint --quiet --fix",
+      "npm run format",
+      "git add"
+    ]
+  }
+}

@@ -1,0 +1,4 @@
+{
+  "ignore": ["client", "config", "scripts", "server", "shared", ".dev/client", ".build/client"],
+  "watch": ["./.dev/server", "./.build/server"]
+}
