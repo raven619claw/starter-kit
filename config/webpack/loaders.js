@@ -40,13 +40,10 @@ const babelLoader = ({ type = 'legacy', PROD }) => ({
             }
           }
         ],
-        '@babel/preset-react'
+        '@babel/preset-react',
+        ['@emotion/babel-preset-css-prop', { sourceMap: !PROD, autoLabel: !PROD }]
       ],
-      plugins: [
-        ['emotion', { sourceMap: !PROD, autoLabel: !PROD }],
-        '@babel/plugin-syntax-dynamic-import',
-        '@babel/plugin-proposal-class-properties'
-      ]
+      plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-class-properties']
     }
   }
 });

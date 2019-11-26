@@ -71,6 +71,8 @@
     "write-file-webpack-plugin": "^4.5.0"
   },
   "dependencies": {
+    "@emotion/babel-preset-css-prop": "^10.0.23",
+    "@emotion/core": "^10.0.22",
     "body-parser": "^1.19.0",
     "chalk": "^3.0.0",
     "cors": "^2.8.5",
