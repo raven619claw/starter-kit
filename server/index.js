@@ -29,9 +29,9 @@ app.get('/', (req, res) => {
   res.send(`
   <html>
   <head>
-  <script src=${res.locals.getManifest().runtime.js}></script>
-  <script src=${res.locals.getManifest().vendor.js}></script>
-  <script src=${res.locals.getManifest().main.js}></script>
+  <script src=${res.locals.getManifest().runtime ? res.locals.getManifest().runtime.js : ''}></script>
+  <script src=${res.locals.getManifest().vendor ? res.locals.getManifest().vendor.js : ''}></script>
+  <script src=${res.locals.getManifest().main ? res.locals.getManifest().main.js : ''}></script>
   </head>
   </html>
   `);
