@@ -1,12 +1,12 @@
-import '../client/app';
+import 'client/app';
 import path from 'path';
 import * as express from 'express';
 import cors from 'cors';
 import manifestHelpers from 'express-manifest-helpers';
 import bodyParser from 'body-parser';
 
-const { PORT } = require('../config/constants');
-const { paths, logMessage } = require('../config/helper');
+const { PORT } = require('config/constants');
+const { paths, logMessage } = require('config/helper');
 
 require('dotenv').config();
 

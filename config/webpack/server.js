@@ -9,7 +9,7 @@ const config = {
   devtool: PROD ? false : 'eval-source-map',
   name: 'server',
   target: 'node',
-  entry: getFullPath(`server/index.js`),
+  entry: getFullPath(`src/server/index.js`),
   output: {
     path: paths.serverBuild,
     publicPath: `/assets/`,

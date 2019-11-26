@@ -25,7 +25,7 @@ const config = {
   name: 'client',
   target: 'web',
   entry: {
-    main: getFullPath(`client/app.js`)
+    main: getFullPath(`src/client/app.js`)
   },
   output: {
     path: paths.clientBuild,
