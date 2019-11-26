@@ -5,7 +5,7 @@ const webpackHotMiddleware = require('webpack-hot-middleware');
 const { paths, logMessage } = require('../config/helper');
 const { clientConfig, clientCompiler, build } = require('./webpackConfig');
 const { INSPECT, WEBPACK_PORT } = require('../config/constants');
-console.log(process.argv);
+
 const app = express();
 const start = async () => {
   const watchOptions = {
