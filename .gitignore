@@ -24,7 +24,7 @@ jsconfig.json
 *.DS_Store
 .AppleDouble
 .LSOverride
-
+yarn-error.log
 # Icon must end with two \r
 Icon
 
