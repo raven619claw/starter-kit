@@ -41,7 +41,15 @@ const babelLoader = ({ type = 'legacy', PROD }) => ({
           }
         ],
         '@babel/preset-react',
-        ['@emotion/babel-preset-css-prop', { sourceMap: !PROD, autoLabel: !PROD }]
+        [
+          '@emotion/babel-preset-css-prop',
+          {
+            sourceMap: !PROD,
+            autoLabel: !PROD,
+            useBuiltIns: false,
+            labelFormat: '[local]'
+          }
+        ]
       ],
       plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-class-properties']
     }
