@@ -4,11 +4,20 @@ const { logMessage, compilerPromise } = require('../config/helper');
 const { PROD, WATCH, HOT_RELOAD, DEVSERVER_HOST, WEBPACK_PORT } = require('../config/constants');
 
 const [[clientConfig, clientModernConfig], serverConfig] = webpackConfig;
+
 if (HOT_RELOAD) {
   clientConfig.entry.main = [
     `webpack-hot-middleware/client?path=${DEVSERVER_HOST}:${WEBPACK_PORT}/__webpack_hmr`,
     clientConfig.entry.main
   ];
+  const { publicPath } = clientConfig.output;
+  clientConfig.output.publicPath = [`${DEVSERVER_HOST}:${WEBPACK_PORT}`, publicPath]
+    .join('/')
+    .replace(/([^:+])\/+/g, '$1/');
+
+  serverConfig.output.publicPath = [`${DEVSERVER_HOST}:${WEBPACK_PORT}`, publicPath]
+    .join('/')
+    .replace(/([^:+])\/+/g, '$1/');
 }
 const multiCompiler = webpack([clientConfig, serverConfig, clientModernConfig]);
 

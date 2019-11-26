@@ -29,7 +29,7 @@ const config = {
   },
   output: {
     path: paths.clientBuild,
-    publicPath: '/assets/',
+    publicPath: paths.publicPath,
     chunkFilename: !PROD ? '[name].js' : '[name].[contenthash].js',
     filename: !PROD ? '[name].js' : '[name].[contenthash].js'
   },
