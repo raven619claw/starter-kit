@@ -82,6 +82,7 @@
     "express-manifest-helpers": "^0.6.0",
     "path": "^0.12.7",
     "react": "^16.11.0",
+    "react-auto-bind": "^0.4.2",
     "react-dom": "^16.11.0",
     "react-helmet-async": "^1.0.4",
     "react-redux": "^7.1.1",

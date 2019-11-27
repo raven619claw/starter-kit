@@ -1,15 +1,18 @@
 import React, { Component } from 'react'
+import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
 // eslint-disable-next-line react/prefer-stateless-function
-class App extends Component {
+class Home extends Component {
   render() {
     return <div>Home Desktop</div>
   }
 }
 
-App.needs = () =>
+Home.needs = () =>
   new Promise(resolve => {
-    resolve('foo')
+    resolve()
   })
 
-export default App
+Home.useNeedsLoader = true
+
+export default ContainerHOC(Home)

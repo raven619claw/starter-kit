@@ -7008,6 +7008,11 @@ rc@^1.0.1, rc@^1.1.6, rc@^1.2.7:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-auto-bind@^0.4.2:
+  version "0.4.2"
+  resolved "https://registry.yarnpkg.com/react-auto-bind/-/react-auto-bind-0.4.2.tgz#cda69f9fdd898c4084be5d2126deea844979d340"
+  integrity sha512-D/FZ4uU3e+oH/pZfTFfFVEpJ6On8cBG2h+3wt7GPEkrsahhawan9eOAUE4LItIA2YThnYGUqoPUHI28pGPIxOQ==
+
 react-dom@^0.14.0:
   version "0.14.9"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-0.14.9.tgz#05064a3dcf0fb1880a3b2bfc9d58c55d8d9f6293"

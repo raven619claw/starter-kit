@@ -1,27 +1,30 @@
-const webpack = require('webpack');
-const Visualizer = require('webpack-visualizer-plugin');
-const AssetsPlugin = require('assets-webpack-plugin');
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin');
-const WriteFilePlugin = require('write-file-webpack-plugin');
-const { client: clientLoaders, modernClient: modernClientLoaders } = require('./loaders');
-const { resolvers } = require('./resolvers');
-const { client: clientOptimization } = require('./optimizations');
-const { client: clientPlugins } = require('./plugins');
-const { getFullPath, processManifestOutput, paths } = require('../helper');
-const stats = require('./stats');
-const { PROD } = require('../constants');
+const webpack = require('webpack')
+const Visualizer = require('webpack-visualizer-plugin')
+const AssetsPlugin = require('assets-webpack-plugin')
+const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
+const WriteFilePlugin = require('write-file-webpack-plugin')
+const {
+  client: clientLoaders,
+  modernClient: modernClientLoaders
+} = require('./loaders')
+const { resolvers } = require('./resolvers')
+const { client: clientOptimization } = require('./optimizations')
+const { client: clientPlugins } = require('./plugins')
+const { getFullPath, processManifestOutput, paths } = require('../helper')
+const stats = require('./stats')
+const { PROD } = require('../constants')
 
 const assetsPluginInstance = new AssetsPlugin({
   processOutput(assets) {
-    return processManifestOutput(assets);
+    return processManifestOutput(assets)
   },
   filename: 'assetsManifest.json',
   useCompilerPath: true,
   prettyPrint: true
-});
+})
 const config = {
   mode: PROD ? 'production' : 'development',
-  devtool: PROD ? false : 'cheap-eval-source-map',
+  devtool: PROD ? false : 'eval-source-map',
   name: 'client',
   target: 'web',
   entry: {
@@ -59,7 +62,7 @@ const config = {
     new OptimizeCssAssetsPlugin()
   ],
   stats
-};
+}
 
 const modernConfig = {
   ...config,
@@ -76,5 +79,5 @@ const modernConfig = {
     ...config.optimization,
     runtimeChunk: false // generate a manifest which will work the magic of webpack for sewing the bundles on runtime.
   }
-};
-module.exports = [config, modernConfig];
+}
+module.exports = [config, modernConfig]
