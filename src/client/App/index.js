@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Router from 'client/Routes/Desktop/Router'
+import { Link } from 'react-router-dom'
 import { style } from './styles'
 import './index.scss'
 
@@ -7,7 +9,17 @@ export default class App extends Component {
   render() {
     return (
       <div className="color-red" css={style}>
-        React
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/list">List</Link>
+            </li>
+          </ul>
+        </nav>
+        <Router />
       </div>
     )
   }
