@@ -4,6 +4,7 @@ import cors from 'cors'
 import manifestHelpers from 'express-manifest-helpers'
 import bodyParser from 'body-parser'
 
+import serverRenderer from 'server/middleware/serverRenderer'
 const { PORT } = require('config/constants')
 const { paths, logMessage } = require('config/helper')
 
@@ -24,26 +25,7 @@ app.use(
   })
 )
 
-app.get('/', (req, res) => {
-  res.send(`
-  <html>
-  <head>
-  <link href="${
-    res.locals.getManifest().main ? res.locals.getManifest().main.css : ''
-  }" rel="stylesheet" type="text/css">
-  <link href="${
-    res.locals.getManifest().main ? res.locals.getManifest().main.rtlcss : ''
-  }" rel="stylesheet" type="text/css">
-  </head>
-  <body>
-  <div id='root'/>
-  </body>
-  <script src=${res.locals.getManifest().runtime ? res.locals.getManifest().runtime.js : ''}></script>
-  <script src=${res.locals.getManifest().vendor ? res.locals.getManifest().vendor.js : ''}></script>
-  <script src=${res.locals.getManifest().main ? res.locals.getManifest().main.js : ''}></script>
-  </html>
-  `)
-})
+app.use(serverRenderer())
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console

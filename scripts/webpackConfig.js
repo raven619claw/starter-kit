@@ -1,73 +1,77 @@
-const webpack = require('webpack');
-const webpackConfig = require('../config/webpack');
-const { logMessage, compilerPromise } = require('../config/helper');
-const { PROD, WATCH, HOT_RELOAD, DEVSERVER_HOST, WEBPACK_PORT } = require('../config/constants');
+const webpack = require('webpack')
+const webpackConfig = require('../config/webpack')
+const { logMessage, compilerPromise } = require('../config/helper')
+const { PROD, WATCH, HOT_RELOAD, DEVSERVER_HOST, WEBPACK_PORT, CDN_PATH } = require('../config/constants')
 
-const [[clientConfig, clientModernConfig], serverConfig] = webpackConfig;
+const [[clientConfig, clientModernConfig], serverConfig] = webpackConfig
 
 if (HOT_RELOAD) {
   clientConfig.entry.main = [
     `webpack-hot-middleware/client?path=${DEVSERVER_HOST}:${WEBPACK_PORT}/__webpack_hmr`,
     clientConfig.entry.main
-  ];
-  const { publicPath } = clientConfig.output;
+  ]
+  const { publicPath } = clientConfig.output
   clientConfig.output.publicPath = [`${DEVSERVER_HOST}:${WEBPACK_PORT}`, publicPath]
     .join('/')
-    .replace(/([^:+])\/+/g, '$1/');
+    .replace(/([^:+])\/+/g, '$1/')
 
   serverConfig.output.publicPath = [`${DEVSERVER_HOST}:${WEBPACK_PORT}`, publicPath]
     .join('/')
-    .replace(/([^:+])\/+/g, '$1/');
+    .replace(/([^:+])\/+/g, '$1/')
 }
-const multiCompiler = webpack([clientConfig, serverConfig, clientModernConfig]);
+if (PROD) {
+  const { publicPath } = clientConfig.output
+  clientConfig.output.publicPath = [CDN_PATH, publicPath].join('/').replace(/([^:+])\/+/g, '$1/')
+}
+const multiCompiler = webpack([clientConfig, serverConfig, clientModernConfig])
 
-const clientCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'client');
-const clientModernCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'clientModern');
-const serverCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'server');
+const clientCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'client')
+const clientModernCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'clientModern')
+const serverCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'server')
 
-const clientPromise = compilerPromise('client', clientCompiler);
-const clientModernPromise = compilerPromise('clientModern', clientCompiler);
-const serverPromise = compilerPromise('server', serverCompiler);
+const clientPromise = compilerPromise('client', clientCompiler)
+const clientModernPromise = compilerPromise('clientModern', clientCompiler)
+const serverPromise = compilerPromise('server', serverCompiler)
 
 const build = async () => {
-  [serverCompiler, clientModernCompiler, clientCompiler].map(compiler => {
+  ;[serverCompiler, clientModernCompiler, clientCompiler].map(compiler => {
     if (HOT_RELOAD && compiler.name === 'client') {
-      return;
+      return
     }
     compiler.watch({}, (error, stats) => {
-      const info = stats.toJson();
+      const info = stats.toJson()
       if (!error && !stats.hasErrors()) {
-        logMessage(stats.toString(serverConfig.stats));
-        return;
+        logMessage(stats.toString(serverConfig.stats))
+        return
       }
       if (error) {
-        logMessage(error, 'error');
+        logMessage(error, 'error')
       }
 
       if (stats.hasErrors()) {
-        logMessage(info.errors.toString(), 'error');
+        logMessage(info.errors.toString(), 'error')
       }
 
       if (stats.hasWarnings()) {
-        logMessage(info.warnings.toString(), 'warning');
+        logMessage(info.warnings.toString(), 'warning')
       }
-    });
-  });
+    })
+  })
 
   // wait until client and server is compiled
   try {
-    await serverPromise;
-    await clientPromise;
-    await clientModernPromise;
-    logMessage('Done!', 'info');
+    await serverPromise
+    await clientPromise
+    await clientModernPromise
+    logMessage('Done!', 'info')
     if (PROD || !WATCH) {
-      process.exit();
+      process.exit()
     }
   } catch (error) {
-    logMessage(error, 'error');
-    process.exit();
+    logMessage(error, 'error')
+    process.exit()
   }
-};
+}
 module.exports = {
   clientConfig,
   clientModernConfig,
@@ -76,4 +80,4 @@ module.exports = {
   clientModernCompiler,
   serverCompiler,
   build
-};
+}
