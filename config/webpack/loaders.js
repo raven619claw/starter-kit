@@ -1,9 +1,9 @@
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin-with-rtl') // have replaced mini-css-extract-plugin with the rtl if facing issues revert it
 
-const autoPrefixer = require('autoprefixer');
+const autoPrefixer = require('autoprefixer')
 
-const cssRegex = /\.scss$/;
-const cssModuleRegex = /\.module\.scss$/;
+const cssRegex = /\.scss$/
+const cssModuleRegex = /\.module\.scss$/
 
 const babelLoader = ({ type = 'legacy', PROD }) => ({
   test: /\.(js|jsx|mjs)$/,
@@ -54,11 +54,12 @@ const babelLoader = ({ type = 'legacy', PROD }) => ({
       plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-class-properties']
     }
   }
-});
+})
 
-const cssLoaderClient = {
+const cssLoaderClient = PROD => ({
   test: cssRegex,
   use: [
+    !PROD ? 'css-hot-loader' : '',
     MiniCssExtractPlugin.loader,
     'css-loader',
     {
@@ -73,18 +74,18 @@ const cssLoaderClient = {
     },
     'sass-loader'
   ]
-};
+})
 
 const cssLoaderServer = {
   test: cssRegex,
   exclude: cssModuleRegex,
   use: [{ loader: require.resolve('ignore-loader') }]
-};
+}
 
 const clientModernIgnoreLoader = {
   test: /\.(png|jpe?g|gif|svg|scss|css)$/,
   use: [{ loader: require.resolve('ignore-loader') }]
-};
+}
 const urlLoaderClient = {
   test: /\.(png|jpe?g|gif|svg)$/,
   loader: require.resolve('url-loader'),
@@ -92,7 +93,7 @@ const urlLoaderClient = {
     limit: 20480, // this is not to generate assets for now. but should be set to a proper limit
     name: '[name].[hash:8].[ext]'
   }
-};
+}
 
 const urlLoaderServer = {
   ...urlLoaderClient,
@@ -100,7 +101,7 @@ const urlLoaderServer = {
     ...urlLoaderClient.options,
     emitFile: false
   }
-};
+}
 
 const fileLoaderClient = {
   exclude: [/\.(js|css|mjs|html|json)$/], // any assets which is not in the one mentioned.
@@ -112,7 +113,7 @@ const fileLoaderClient = {
       }
     }
   ]
-};
+}
 
 const fileLoaderServer = {
   exclude: [/\.(js|css|mjs|html|json)$/],
@@ -125,25 +126,25 @@ const fileLoaderServer = {
       }
     }
   ]
-};
+}
 
 const client = ({ PROD }) => [
   {
-    oneOf: [babelLoader({ PROD }), cssLoaderClient, urlLoaderClient, fileLoaderClient]
+    oneOf: [babelLoader({ PROD }), cssLoaderClient(PROD), urlLoaderClient, fileLoaderClient]
   }
-];
+]
 const server = ({ PROD }) => [
   {
     oneOf: [babelLoader({ PROD }), cssLoaderServer, urlLoaderServer, fileLoaderServer]
   }
-];
+]
 const modernClient = ({ PROD }) => [
   {
     oneOf: [babelLoader({ PROD, type: 'modern' }), clientModernIgnoreLoader]
   }
-];
+]
 module.exports = {
   client,
   server,
   modernClient
-};
+}

@@ -1,0 +1,14 @@
+{
+  "exclude": ["node_modules", "dist", ".build", ".dev"],
+  "compilerOptions": {
+    "target": "es2017",
+    "allowSyntheticDefaultImports": false,
+    "baseUrl": "./",
+    "paths": {
+      "client/*": ["./src/client/*"],
+      "server/*": ["./src/server/*"],
+      "shared/*": ["./src/shared/*"],
+      "config/*": ["./config/*"]
+    }
+  }
+}

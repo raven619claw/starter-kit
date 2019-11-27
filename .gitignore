@@ -18,7 +18,7 @@ npm-debug.log
 #vscode
 *.vscode
 *.prettierrc
-jsconfig.json
+#jsconfig.json
 
 # General
 *.DS_Store
