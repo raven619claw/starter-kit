@@ -10,7 +10,7 @@
     "start:dev:inspect": "export NODE_ENV=dev WATCH=true HOT_RELOAD=true INSPECT=true; node scripts/start",
     "start:prod": "export NODE_ENV=production; node .build/server/server.js",
     "lint-staged": "lint-staged",
-    "format": "./node_modules/.bin/prettier --write --single-quote --print-width=120",
+    "format": "./node_modules/.bin/prettier --write",
     "lint-all": "npm run format-all && npm run lint",
     "format-all": "./node_modules/.bin/prettier --write --single-quote --print-width=120 \"**/*.{js,jsx}\"",
     "lint": "./node_modules/eslint/bin/eslint.js . --ext .js --ext .jsx --fix || true"

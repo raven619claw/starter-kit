@@ -1,7 +1,14 @@
 const webpack = require('webpack')
 const webpackConfig = require('../config/webpack')
 const { logMessage, compilerPromise } = require('../config/helper')
-const { PROD, WATCH, HOT_RELOAD, DEVSERVER_HOST, WEBPACK_PORT, CDN_PATH } = require('../config/constants')
+const {
+  PROD,
+  WATCH,
+  HOT_RELOAD,
+  DEVSERVER_HOST,
+  WEBPACK_PORT,
+  CDN_PATH
+} = require('../config/constants')
 
 const [[clientConfig, clientModernConfig], serverConfig] = webpackConfig
 
@@ -11,23 +18,37 @@ if (HOT_RELOAD) {
     clientConfig.entry.main
   ]
   const { publicPath } = clientConfig.output
-  clientConfig.output.publicPath = [`${DEVSERVER_HOST}:${WEBPACK_PORT}`, publicPath]
+  clientConfig.output.publicPath = [
+    `${DEVSERVER_HOST}:${WEBPACK_PORT}`,
+    publicPath
+  ]
     .join('/')
     .replace(/([^:+])\/+/g, '$1/')
 
-  serverConfig.output.publicPath = [`${DEVSERVER_HOST}:${WEBPACK_PORT}`, publicPath]
+  serverConfig.output.publicPath = [
+    `${DEVSERVER_HOST}:${WEBPACK_PORT}`,
+    publicPath
+  ]
     .join('/')
     .replace(/([^:+])\/+/g, '$1/')
 }
 if (PROD) {
   const { publicPath } = clientConfig.output
-  clientConfig.output.publicPath = [CDN_PATH, publicPath].join('/').replace(/([^:+])\/+/g, '$1/')
+  clientConfig.output.publicPath = [CDN_PATH, publicPath]
+    .join('/')
+    .replace(/([^:+])\/+/g, '$1/')
 }
 const multiCompiler = webpack([clientConfig, serverConfig, clientModernConfig])
 
-const clientCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'client')
-const clientModernCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'clientModern')
-const serverCompiler = multiCompiler.compilers.find(compiler => compiler.name === 'server')
+const clientCompiler = multiCompiler.compilers.find(
+  compiler => compiler.name === 'client'
+)
+const clientModernCompiler = multiCompiler.compilers.find(
+  compiler => compiler.name === 'clientModern'
+)
+const serverCompiler = multiCompiler.compilers.find(
+  compiler => compiler.name === 'server'
+)
 
 const clientPromise = compilerPromise('client', clientCompiler)
 const clientModernPromise = compilerPromise('clientModern', clientCompiler)
