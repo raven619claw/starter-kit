@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import Router from 'client/Routes/Desktop/Router'
+import Router from 'client/Router'
 import { Link } from 'react-router-dom'
 import { style } from './styles'
 import './index.scss'

@@ -1,7 +1,7 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter, matchPath } from 'react-router-dom'
-import { RoutesDesktop as Routes } from 'client/Routes/Desktop/Router'
+import { Routes } from 'client/Router'
 import App from 'client/App'
 import {
   getHTMLHead,
@@ -12,7 +12,8 @@ import {
 const serverRenderer = () => (req, res) => {
   res.write(getHTMLHead(res))
   const needs = []
-  Routes.some(route => {
+  const deviceType = 'desktop'
+  Routes(deviceType).some(route => {
     // use `matchPath` here
     const match = matchPath(req.path, route)
     if (match && route.component.needs) {
