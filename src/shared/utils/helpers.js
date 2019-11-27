@@ -5,7 +5,7 @@ export const getValue = (object, value, defaultValue) => {
   }
   const valueArr = value.split('.')
   for (let i = 0; i < valueArr.length; i++) {
-    if (object[valueArr[i]] != undefined) {
+    if (object[valueArr[i]] !== undefined) {
       // eslint-disable-next-line no-param-reassign
       object = object[valueArr[i]]
     } else {
