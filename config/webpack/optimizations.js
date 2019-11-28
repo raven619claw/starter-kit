@@ -1,6 +1,7 @@
-const TerserWebpackPlugin = require('terser-webpack-plugin');
+const TerserWebpackPlugin = require('terser-webpack-plugin')
 
 const clientOptimization = {
+  namedModules: false,
   noEmitOnErrors: true, // not to generate falsy bundles.
   runtimeChunk: 'single', // generate a manifest which will work the magic of webpack for sewing the bundles on runtime.
   minimizer: [
@@ -48,9 +49,10 @@ const clientOptimization = {
       }
     }
   }
-};
+}
 
-const serverOptimizations = {
+const serverOptimization = {
+  namedModules: false,
   minimize: false,
   splitChunks: {
     cacheGroups: {
@@ -63,9 +65,9 @@ const serverOptimizations = {
       }
     }
   }
-};
+}
 
 module.exports = {
   client: clientOptimization,
-  server: serverOptimizations
-};
+  server: serverOptimization
+}

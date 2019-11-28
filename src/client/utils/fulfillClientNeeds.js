@@ -41,27 +41,35 @@ export const fulfillClientNeeds = ({ store, location, needItems = [] }) => {
 }
 // DEV: this is kinda experimental and not verified.
 // do not use
-// export const fulfillClientUnmountNeeds = ({ store, location, unMountNeedItems = [] }) => {
-//   const unMountNeeds = [];
-//   const globalStore = store.getState();
-//   if (Object.prototype.toString.call(unMountNeedItems) == '[object Array]') {
-//     unMountNeeds.push(...unMountNeedItems);
-//   } else {
-//     unMountNeeds.push(unMountNeedItems);
-//   }
-//   const promises = unMountNeeds.map(unMountNeed =>
-//     unMountNeed({ store, location, userAuthenticationDetails: globalStore.userAuthenticationDetails })
-//   );
-//   return new Promise((resolve, reject) => {
-//     Promise.all(promises)
-//       .then(() => {
-//         resolve();
-//       })
-//       .catch(err => {
-//         reject(err);
-//       });
-//   });
-// };
+export const fulfillClientUnmountNeeds = ({
+  store,
+  location,
+  unMountNeedItems = []
+}) => {
+  const unMountNeeds = []
+  const globalStore = store.getState()
+  if (Object.prototype.toString.call(unMountNeedItems) == '[object Array]') {
+    unMountNeeds.push(...unMountNeedItems)
+  } else {
+    unMountNeeds.push(unMountNeedItems)
+  }
+  const promises = unMountNeeds.map(unMountNeed =>
+    unMountNeed({
+      store,
+      location,
+      userAuthenticationDetails: globalStore.userAuthenticationDetails
+    })
+  )
+  return new Promise((resolve, reject) => {
+    Promise.all(promises)
+      .then(() => {
+        resolve()
+      })
+      .catch(err => {
+        reject(err)
+      })
+  })
+}
 
 // this is not used as of now
 // just leaving it here for any future case

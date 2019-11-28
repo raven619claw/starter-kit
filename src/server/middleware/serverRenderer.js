@@ -6,7 +6,8 @@ import App from 'client/App'
 import {
   getHTMLHead,
   fetchComponentData,
-  getHTMLBody
+  getHTMLBody,
+  setServerPushHeaderForScripts
 } from 'server/utils/renderHelpers'
 import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
@@ -17,7 +18,8 @@ const stats = __non_webpack_require__(
   `${paths.clientBuild}/react-loadable.json`
 )
 const serverRenderer = () => (req, res) => {
-  res.write(getHTMLHead(res))
+  setServerPushHeaderForScripts({ res })
+  res.write('<!DOCTYPE html>')
   const needs = []
   const deviceType = 'desktop'
   Routes(deviceType).some(route => {
@@ -53,7 +55,11 @@ const serverRenderer = () => (req, res) => {
         })
         res.end()
       }
-      res.end(getHTMLBody({ content, styles, scripts, moduleScripts }))
+
+      res.end(
+        getHTMLHead({ res, styles }) +
+          getHTMLBody({ res, content, scripts, moduleScripts })
+      )
     })
     .catch(() => {})
 }

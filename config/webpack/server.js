@@ -1,8 +1,9 @@
-const webpack = require('webpack');
-const { server: serverLoaders } = require('./loaders');
-const { resolvers } = require('./resolvers');
-const { getFullPath, paths } = require('../helper');
-const { PROD } = require('../constants');
+const webpack = require('webpack')
+const { server: serverLoaders } = require('./loaders')
+const { resolvers } = require('./resolvers')
+const { getFullPath, paths } = require('../helper')
+const { sercver: serverOptimization } = require('./optimizations')
+const { PROD } = require('../constants')
 
 const config = {
   mode: PROD ? 'production' : 'development',
@@ -26,7 +27,8 @@ const config = {
   },
   stats: {
     colors: true,
-    warningsFilter: warning => warning.indexOf('Conflicting order between:') === -1
+    warningsFilter: warning =>
+      warning.indexOf('Conflicting order between:') === -1
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -37,8 +39,8 @@ const config = {
     })
   ],
   optimization: {
-    minimize: false
+    ...serverOptimization
   }
-};
+}
 
-module.exports = config;
+module.exports = config
