@@ -13,6 +13,4 @@ Home.needs = () =>
     resolve()
   })
 
-Home.useNeedsLoader = true
-
 export default ContainerHOC(Home)

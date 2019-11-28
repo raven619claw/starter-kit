@@ -7,9 +7,9 @@ import {
 import { withRouter } from 'react-router'
 
 export default WrappedComponent => {
-  const { name: componentName, useNeedsLoader } = WrappedComponent
-  // just return the WrappedComponent if useNeedsLoader is false or is Server
-  if (!useNeedsLoader || !BROWSER) {
+  const { name: componentName, needs } = WrappedComponent
+  // just return the WrappedComponent if needs is undefined or is Server
+  if (!needs || !BROWSER) {
     return WrappedComponent
   }
 
