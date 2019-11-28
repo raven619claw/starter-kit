@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:dev": " rm -rf ./.dev &&  export NODE_ENV=dev WATCH=true;  node scripts/build.js",
-    "build:prod": " rm -rf ./.build &&  export NODE_ENV=production; node scripts/build.js",
+    "build:dev": " rm -rf ./.dev && mkdir -p ./.dev/client &&  export NODE_ENV=dev WATCH=true;  node scripts/build.js",
+    "build:prod": " rm -rf ./.build && mkdir -p ./.build/client && export NODE_ENV=production; node scripts/build.js",
     "start:dev": "export NODE_ENV=dev WATCH=true HOT_RELOAD=true; node scripts/start",
     "start:dev:inspect": "export NODE_ENV=dev WATCH=true HOT_RELOAD=true INSPECT=true; node scripts/start",
     "start:prod": "export NODE_ENV=production; node .build/server/server.js",
