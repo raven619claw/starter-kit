@@ -8,6 +8,7 @@ dev/
 .build/
 .dist/
 .dev/
+react-loadable.json
 
 #dump
 *dump.rdb

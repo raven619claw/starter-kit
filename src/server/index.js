@@ -8,6 +8,7 @@ import serverRenderer from 'server/middleware/serverRenderer'
 import errorHandler from 'server/middleware/errorHandler'
 import { PORT } from 'config/constants'
 import { paths, logMessage } from 'config/helper'
+import Loadable from 'react-loadable'
 
 const app = express()
 app.use(cors())
@@ -23,9 +24,11 @@ app.use(
 )
 app.use(serverRenderer())
 app.use(errorHandler)
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  logMessage(`App is running: 🌎 http://localhost:${PORT || 8500}`)
+Loadable.preloadAll().then(() => {
+  app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
+    logMessage(`App is running: 🌎 http://localhost:${PORT || 8500}`)
+  })
 })
 
 export default app

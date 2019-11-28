@@ -1,16 +1,26 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import HomeDesktop from 'client/DesktopContainers/Home'
-// import HomeMobile from 'client/MobileContainers/Home'
-import List from 'client/DesktopContainers/List'
+import Loadable from 'react-loadable'
+
+const LoadableListContainer = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "List" */ 'client/DesktopContainers/List'),
+  loading: () => <div>loading...</div>
+})
+
+const LoadableHomeContainer = Loadable({
+  loader: () =>
+    import(/* webpackChunkName: "Home" */ 'client/DesktopContainers/Home'),
+  loading: () => <div>loading...</div>
+})
 
 export const getComponent = (componentName, deviceType) => {
   switch (componentName) {
     case 'home':
       if (deviceType === 'desktop') {
-        return HomeDesktop
+        return LoadableHomeContainer
       }
-      return HomeDesktop
+      return LoadableHomeContainer
   }
 }
 
@@ -23,7 +33,7 @@ export const Routes = deviceType => [
   },
   {
     path: '/list',
-    component: List,
+    component: LoadableListContainer,
     name: 'list',
     exact: true
   }

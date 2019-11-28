@@ -51,7 +51,11 @@ const babelLoader = ({ type = 'legacy', PROD }) => ({
           }
         ]
       ],
-      plugins: ['@babel/plugin-syntax-dynamic-import', '@babel/plugin-proposal-class-properties']
+      plugins: [
+        '@babel/plugin-syntax-dynamic-import',
+        '@babel/plugin-proposal-class-properties',
+        'react-loadable/babel'
+      ]
     }
   }
 })
@@ -130,12 +134,22 @@ const fileLoaderServer = {
 
 const client = ({ PROD }) => [
   {
-    oneOf: [babelLoader({ PROD }), cssLoaderClient(PROD), urlLoaderClient, fileLoaderClient]
+    oneOf: [
+      babelLoader({ PROD }),
+      cssLoaderClient(PROD),
+      urlLoaderClient,
+      fileLoaderClient
+    ]
   }
 ]
 const server = ({ PROD }) => [
   {
-    oneOf: [babelLoader({ PROD }), cssLoaderServer, urlLoaderServer, fileLoaderServer]
+    oneOf: [
+      babelLoader({ PROD }),
+      cssLoaderServer,
+      urlLoaderServer,
+      fileLoaderServer
+    ]
   }
 ]
 const modernClient = ({ PROD }) => [
