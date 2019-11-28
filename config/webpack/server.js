@@ -17,7 +17,7 @@ const config = {
     library: 'react-starter-kit',
     libraryTarget: 'commonjs2',
     filename: `server.js`,
-    chunkFilename: PROD ? `[name].server.js` : `[name].[contenthash].server.js`
+    chunkFilename: !PROD ? `[name].server.js` : `[name].[contenthash].server.js`
   },
   resolve: {
     ...resolvers
