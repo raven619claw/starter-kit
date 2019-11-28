@@ -7,6 +7,7 @@ import './index.scss'
 // eslint-disable-next-line react/prefer-stateless-function
 export default class App extends Component {
   render() {
+    const { deviceType } = this.props
     return (
       <div className="color-red" css={style}>
         <nav>
@@ -19,7 +20,7 @@ export default class App extends Component {
             </li>
           </ul>
         </nav>
-        <Router />
+        <Router deviceType={deviceType} />
       </div>
     )
   }

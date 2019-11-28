@@ -4,11 +4,10 @@ import express from 'express'
 import cors from 'cors'
 import manifestHelpers from 'express-manifest-helpers'
 import bodyParser from 'body-parser'
-import serverRenderer from 'server/middleware/serverRenderer'
-import errorHandler from 'server/middleware/errorHandler'
 import { PORT } from 'config/constants'
 import { paths, logMessage } from 'config/helper'
 import Loadable from 'react-loadable'
+import setupCustomMiddlewares from 'server/middleware'
 
 const app = express()
 app.use(cors())
@@ -22,8 +21,7 @@ app.use(
     cache: false
   })
 )
-app.use(serverRenderer())
-app.use(errorHandler)
+setupCustomMiddlewares(app)
 Loadable.preloadAll().then(() => {
   app.listen(PORT, () => {
     // eslint-disable-next-line no-console

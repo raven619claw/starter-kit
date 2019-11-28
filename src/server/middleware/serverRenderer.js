@@ -4,10 +4,10 @@ import { StaticRouter, matchPath } from 'react-router-dom'
 import { Routes } from 'client/Router'
 import App from 'client/App'
 import {
-  getHTMLHead,
+  getHTML,
   fetchComponentData,
-  getHTMLBody,
-  setServerPushHeaderForScripts
+  setServerPushHeaderForScripts,
+  getDeviceType
 } from 'server/utils/renderHelpers'
 import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
@@ -17,11 +17,11 @@ const { paths } = require('config/helper')
 const stats = __non_webpack_require__(
   `${paths.clientBuild}/react-loadable.json`
 )
-const serverRenderer = () => (req, res) => {
+const serverRenderer = (req, res) => {
+  const deviceType = getDeviceType(req.userAgent)
   setServerPushHeaderForScripts({ res })
   res.write('<!DOCTYPE html>')
   const needs = []
-  const deviceType = 'desktop'
   Routes(deviceType).some(route => {
     // use `matchPath` here
     const match = matchPath(req.path, route)
@@ -37,7 +37,7 @@ const serverRenderer = () => (req, res) => {
       const content = renderToString(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
           <StaticRouter location={req.url} context={context}>
-            <App />
+            <App deviceType={deviceType} />
           </StaticRouter>
         </Loadable.Capture>
       )
@@ -57,8 +57,7 @@ const serverRenderer = () => (req, res) => {
       }
 
       res.end(
-        getHTMLHead({ res, styles }) +
-          getHTMLBody({ res, content, scripts, moduleScripts })
+        getHTML({ res, content, scripts, moduleScripts, deviceType, styles })
       )
     })
     .catch(() => {})

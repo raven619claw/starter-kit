@@ -1,40 +1,22 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import Loadable from 'react-loadable'
+import { routeNames, routeMapping } from 'client/Router/RouteMappings'
+import { routePaths } from 'shared/urlConfig'
 
-const LoadableListContainer = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "List" */ 'client/DesktopContainers/List'),
-  loading: () => <div>loading...</div>
-})
-
-const LoadableHomeContainer = Loadable({
-  loader: () =>
-    import(/* webpackChunkName: "Home" */ 'client/DesktopContainers/Home'),
-  loading: () => <div>loading...</div>
-})
-
-export const getComponent = (componentName, deviceType) => {
-  switch (componentName) {
-    case 'home':
-      if (deviceType === 'desktop') {
-        return LoadableHomeContainer
-      }
-      return LoadableHomeContainer
-  }
-}
+export const getComponent = (componentName, deviceType) =>
+  routeMapping()[componentName][deviceType] // maybe pass data here to add some logic as wht to render
 
 export const Routes = deviceType => [
   {
-    path: '/',
-    component: getComponent('home', deviceType),
-    name: 'home',
+    path: routePaths.home,
+    component: getComponent(routeNames.home, deviceType),
+    name: routeNames.home,
     exact: true
   },
   {
-    path: '/list',
-    component: LoadableListContainer,
-    name: 'list',
+    path: routePaths.list,
+    component: getComponent(routeNames.list, deviceType),
+    name: routeNames.list,
     exact: true
   }
 ]
