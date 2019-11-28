@@ -3,7 +3,7 @@ import autoBind from 'react-auto-bind'
 import {
   fulfillClientNeeds,
   fulfillClientUnmountNeeds
-} from 'shared/utils/fulfillClientNeeds'
+} from 'client/utils/fulfillClientNeeds'
 import { withRouter } from 'react-router'
 
 export default WrappedComponent => {
