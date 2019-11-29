@@ -39,8 +39,9 @@ export const getHTMLHead = ({ res, styles }) => `
       .join('\n')}
   </head>`
 
-const getHTMLScriptObjects = ({ deviceType }) => `<script>
+const getHTMLScriptObjects = ({ deviceType, isRTL }) => `<script>
   var deviceType = '${deviceType}'
+  var isRTL = !!${isRTL}
 </script>`
 
 const getHTMLPostBodyTags = ({
@@ -75,11 +76,12 @@ export const getHTML = ({
   scripts,
   moduleScripts,
   deviceType,
-  styles
+  styles,
+  isRTL
 }) =>
   `${getHTMLHead({ res, styles })}
   ${getHTMLBody({ content })}
-  ${getHTMLScriptObjects({ deviceType })}
+  ${getHTMLScriptObjects({ deviceType, isRTL })}
   ${getHTMLPostBodyTags({ res, scripts, moduleScripts })}`
 
 export const getDeviceType = ua => {

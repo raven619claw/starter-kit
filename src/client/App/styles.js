@@ -1,5 +1,6 @@
 import { css } from '@emotion/core'
 
 export const style = css`
-  color: green;
+  margin-left: 5px;
+  display: flex;
 `

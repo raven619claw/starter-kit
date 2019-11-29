@@ -92,6 +92,7 @@
     "react-router-dom": "^5.1.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
+    "stylis-rtl": "^1.0.1",
     "ua-parser-js": "^0.7.20"
   },
   "husky": {

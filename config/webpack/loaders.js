@@ -46,8 +46,8 @@ const babelLoader = ({ type = 'legacy', PROD }) => ({
           {
             sourceMap: !PROD,
             autoLabel: !PROD,
-            useBuiltIns: false,
-            labelFormat: '[local]'
+            labelFormat: !PROD ? '[dirname]--[filename]-[local]' : '',
+            cssPropOptimization: true
           }
         ]
       ],
@@ -60,7 +60,7 @@ const babelLoader = ({ type = 'legacy', PROD }) => ({
   }
 })
 
-const cssLoaderClient = PROD => ({
+const cssLoaderClient = ({ PROD }) => ({
   test: cssRegex,
   use: [
     !PROD ? 'css-hot-loader' : '',
@@ -77,7 +77,7 @@ const cssLoaderClient = PROD => ({
       }
     },
     'sass-loader'
-  ]
+  ].filter(item => item) // added filter here as this array cannot accept empty string value which happens for css-hot-loader on PROD
 })
 
 const cssLoaderServer = {
@@ -136,7 +136,7 @@ const client = ({ PROD }) => [
   {
     oneOf: [
       babelLoader({ PROD }),
-      cssLoaderClient(PROD),
+      cssLoaderClient({ PROD }),
       urlLoaderClient,
       fileLoaderClient
     ]

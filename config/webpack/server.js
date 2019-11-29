@@ -4,7 +4,6 @@ const { resolvers } = require('./resolvers')
 const { getFullPath, paths } = require('../helper')
 const { sercver: serverOptimization } = require('./optimizations')
 const { PROD } = require('../constants')
-
 const config = {
   mode: PROD ? 'production' : 'development',
   devtool: PROD ? false : 'eval-source-map',
@@ -23,7 +22,7 @@ const config = {
     ...resolvers
   },
   module: {
-    rules: serverLoaders(PROD)
+    rules: serverLoaders({ PROD })
   },
   stats: {
     colors: true,

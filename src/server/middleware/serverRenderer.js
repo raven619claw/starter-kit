@@ -11,6 +11,9 @@ import {
 } from 'server/utils/renderHelpers'
 import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
+import { CacheProvider } from '@emotion/core'
+import getEmotionCache from 'shared/getEmotionCache'
+
 const { paths } = require('config/helper')
 
 // eslint-disable-next-line no-undef
@@ -18,7 +21,8 @@ const stats = __non_webpack_require__(
   `${paths.clientBuild}/react-loadable.json`
 )
 const serverRenderer = (req, res) => {
-  const deviceType = getDeviceType(req.userAgent)
+  const { isRTL, userAgent } = req.clientEnv
+  const deviceType = getDeviceType(userAgent)
   setServerPushHeaderForScripts({ res })
   res.write('<!DOCTYPE html>')
   const needs = []
@@ -36,9 +40,11 @@ const serverRenderer = (req, res) => {
       const modules = []
       const content = renderToString(
         <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-          <StaticRouter location={req.url} context={context}>
-            <App deviceType={deviceType} />
-          </StaticRouter>
+          <CacheProvider value={getEmotionCache(isRTL)}>
+            <StaticRouter location={req.url} context={context}>
+              <App deviceType={deviceType} />
+            </StaticRouter>
+          </CacheProvider>
         </Loadable.Capture>
       )
 
@@ -57,7 +63,15 @@ const serverRenderer = (req, res) => {
       }
 
       res.end(
-        getHTML({ res, content, scripts, moduleScripts, deviceType, styles })
+        getHTML({
+          isRTL,
+          res,
+          content,
+          scripts,
+          moduleScripts,
+          deviceType,
+          styles
+        })
       )
     })
     .catch(() => {})

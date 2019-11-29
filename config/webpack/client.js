@@ -13,7 +13,6 @@ const { client: clientPlugins } = require('./plugins')
 const { getFullPath, processManifestOutput, paths } = require('../helper')
 const stats = require('./stats')
 const { PROD } = require('../constants')
-
 const assetsPluginInstance = new AssetsPlugin({
   processOutput(assets) {
     return processManifestOutput(assets)
@@ -37,7 +36,7 @@ const config = {
     filename: !PROD ? '[name].js' : '[name].[contenthash].js'
   },
   module: {
-    rules: clientLoaders(PROD)
+    rules: clientLoaders({ PROD })
   },
   resolve: {
     ...resolvers
@@ -68,7 +67,7 @@ const modernConfig = {
   ...config,
   name: 'clientModern',
   module: {
-    rules: modernClientLoaders(PROD)
+    rules: modernClientLoaders({ PROD })
   },
   output: {
     ...config.output,

@@ -1,6 +1,9 @@
 import parser from 'ua-parser-js'
 
 export default (req, res, next) => {
-  req.userAgent = parser(req.headers['user-agent'])
+  req.clientEnv = {
+    userAgent: parser(req.headers['user-agent']),
+    isRTL: req.query.rtl
+  }
   next()
 }
