@@ -27,7 +27,7 @@ export const fetchComponentData = (needs, appData) => {
   )
 }
 
-export const getHTMLHead = ({ res, styles }) => `
+export const getHTMLHead = ({ res, styles, isRTL }) => `
   <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0">
@@ -35,6 +35,7 @@ export const getHTMLHead = ({ res, styles }) => `
       manifest: res.locals.getManifest()
     })}
     ${styles
+      .filter(style => style.file.indexOf('rtl') > -1 === !!isRTL)
       .map(style => getStyleHtmlLine({ linkName: style.publicPath }))
       .join('\n')}
   </head>`
@@ -42,6 +43,7 @@ export const getHTMLHead = ({ res, styles }) => `
 const getHTMLScriptObjects = ({ deviceType, isRTL }) => `<script>
   var deviceType = '${deviceType}'
   var isRTL = !!${isRTL}
+  document.dir = '${isRTL ? 'rtl' : 'ltr'}'
 </script>`
 
 const getHTMLPostBodyTags = ({
@@ -79,7 +81,7 @@ export const getHTML = ({
   styles,
   isRTL
 }) =>
-  `${getHTMLHead({ res, styles })}
+  `${getHTMLHead({ res, styles, isRTL })}
   ${getHTMLBody({ content })}
   ${getHTMLScriptObjects({ deviceType, isRTL })}
   ${getHTMLPostBodyTags({ res, scripts, moduleScripts })}`
