@@ -71,7 +71,7 @@ const cssLoaderClient = ({ PROD }) => ({
       options: {
         plugins: () => [
           autoPrefixer({
-            browsers: ['> 1%', 'Firefox >= 20', 'ie >= 9']
+            overrideBrowserslist: ['> 1%', 'Firefox >= 20', 'ie >= 9']
           })
         ]
       }
