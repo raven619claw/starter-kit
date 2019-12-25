@@ -19,12 +19,7 @@ export const setServerPushHeaderForScripts = ({ res }) => {
 
 export const fetchComponentData = (needs, appData) => {
   const needsPromises = needs.map(need => need(appData))
-  return Promise.all([needsPromises]).then(
-    data =>
-      // do something w/ the data so the client
-      // can access it then render the app
-      data
-  )
+  return Promise.all(needsPromises)
 }
 
 export const getHTMLHead = ({ res, styles, isRTL }) => `

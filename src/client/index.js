@@ -24,17 +24,18 @@ if (module.hot) {
   module.hot.accept()
 }
 
-const appRender = () =>
-  Loadable.preloadReady().then(() => {
-    hydrate(
-      <CacheProvider value={getEmotionCache(isRTL)}>
-        <Router>
-          <App deviceType={deviceType} />
-        </Router>
-      </CacheProvider>,
-      document.getElementById('root')
-    )
-  })
+const appRender = async () => {
+  await Loadable.preloadReady()
+  hydrate(
+    <CacheProvider value={getEmotionCache(isRTL)}>
+      <Router>
+        <App deviceType={deviceType} />
+      </Router>
+    </CacheProvider>,
+    document.getElementById('root')
+  )
+}
+
 appRender()
 window.addEventListener('resize', () => {
   const { innerWidth } = window

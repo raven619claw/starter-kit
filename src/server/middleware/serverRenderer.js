@@ -20,61 +20,69 @@ const { paths } = require('config/helper')
 const stats = __non_webpack_require__(
   `${paths.clientBuild}/react-loadable.json`
 )
-const serverRenderer = (req, res) => {
+const serverRenderer = async (req, res) => {
   const { isRTL, userAgent } = req.clientEnv
   const deviceType = getDeviceType(userAgent)
   setServerPushHeaderForScripts({ res })
   res.write('<!DOCTYPE html>')
   const needs = []
-  Routes(deviceType).some(route => {
-    // use `matchPath` here
-    const match = matchPath(req.path, route)
-    if (match && route.component.needs) {
-      needs.push(route.component.needs)
-    }
-  })
-  const context = {}
-
-  fetchComponentData(needs, {}) // maybe pass store here in future and other stuff
-    .then(() => {
-      const modules = []
-      const content = renderToString(
-        <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-          <CacheProvider value={getEmotionCache(isRTL)}>
-            <StaticRouter location={req.url} context={context}>
-              <App deviceType={deviceType} />
-            </StaticRouter>
-          </CacheProvider>
-        </Loadable.Capture>
-      )
-
-      const bundles = getBundles(stats, modules)
-      const styles = bundles.filter(bundle => bundle.file.endsWith('.css'))
-      const scripts = bundles.filter(bundle => bundle.file.endsWith('.js'))
-      const moduleScripts = bundles.filter(bundle =>
-        bundle.file.endsWith('.mjs')
-      )
-
-      if (context.url) {
-        res.writeHead(301, {
-          Location: context.url
-        })
-        res.end()
-      }
-
-      res.end(
-        getHTML({
-          isRTL,
-          res,
-          content,
-          scripts,
-          moduleScripts,
-          deviceType,
-          styles
-        })
-      )
+  const routes = Routes(deviceType)
+  const loadableComponentsPromiseArray = routes
+    .map(route => {
+      const match = matchPath(req.path, route)
+      return match && route.component.preload()
     })
-    .catch(() => {})
+    .filter(item => item)
+  try {
+    const components = await Promise.all(loadableComponentsPromiseArray)
+    components.map(component => {
+      const {
+        default: { needs: need }
+      } = component
+      need && needs.push(need)
+    })
+
+    const context = {}
+
+    await fetchComponentData(needs, {}) // maybe pass store here in future and other stuff
+    const modules = []
+    const content = renderToString(
+      <Loadable.Capture report={moduleName => modules.push(moduleName)}>
+        <CacheProvider value={getEmotionCache(isRTL)}>
+          <StaticRouter location={req.url} context={context}>
+            <App deviceType={deviceType} />
+          </StaticRouter>
+        </CacheProvider>
+      </Loadable.Capture>
+    )
+
+    const bundles = getBundles(stats, modules)
+    const styles = bundles.filter(bundle => bundle.file.endsWith('.css'))
+    const scripts = bundles.filter(bundle => bundle.file.endsWith('.js'))
+    const moduleScripts = bundles.filter(bundle => bundle.file.endsWith('.mjs'))
+
+    if (context.url) {
+      res.writeHead(301, {
+        Location: context.url
+      })
+      res.end()
+    }
+
+    res.end(
+      getHTML({
+        isRTL,
+        res,
+        content,
+        scripts,
+        moduleScripts,
+        deviceType,
+        styles
+      })
+    )
+  } catch (err) {
+    // send err page here
+    res.end(err)
+  }
 }
 
 export default serverRenderer

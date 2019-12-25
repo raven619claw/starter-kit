@@ -29,15 +29,8 @@ export const fulfillClientNeeds = ({ store, location, needItems = [] }) => {
       location
     })
   )
-  return new Promise((resolve, reject) => {
-    Promise.all(promises)
-      .then(() => {
-        resolve()
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
+
+  return Promise.all(promises)
 }
 // DEV: this is kinda experimental and not verified.
 // do not use
@@ -60,15 +53,7 @@ export const fulfillClientUnmountNeeds = ({
       userAuthenticationDetails: globalStore.userAuthenticationDetails
     })
   )
-  return new Promise((resolve, reject) => {
-    Promise.all(promises)
-      .then(() => {
-        resolve()
-      })
-      .catch(err => {
-        reject(err)
-      })
-  })
+  return Promise.all(promises)
 }
 
 // this is not used as of now

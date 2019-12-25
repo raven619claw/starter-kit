@@ -10,7 +10,7 @@ class Home extends Component {
 
 Home.needs = () =>
   new Promise(resolve => {
-    resolve()
+    resolve(1)
   })
 
 export default ContainerHOC(Home)

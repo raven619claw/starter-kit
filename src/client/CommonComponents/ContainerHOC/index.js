@@ -38,20 +38,19 @@ export default WrappedComponent => {
       autoBind(this)
     }
 
-    loadData({ props }) {
+    async loadData({ props }) {
       const store = {} || this.context.store
       this.setState({ loaded: false })
-      fulfillClientNeeds({
-        store,
-        location: props.location,
-        needItems: WrappedComponent.needs
-      })
-        .then(() => {
-          this.setState({ loaded: true, isError: false, err: null })
+      try {
+        await fulfillClientNeeds({
+          store,
+          location: props.location,
+          needItems: WrappedComponent.needs
         })
-        .catch(err => {
-          this.setState({ loaded: true, isError: true, err })
-        })
+        this.setState({ loaded: true, isError: false, err: null })
+      } catch (err) {
+        this.setState({ loaded: true, isError: true, err })
+      }
     }
 
     deleteData({ props }) {
