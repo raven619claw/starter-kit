@@ -6,6 +6,39 @@ const cssRegex = /\.scss$/
 const cssModuleRegex = /\.module\.scss$/
 
 const babelLoader = ({ type = 'legacy', PROD }) => {
+  let targets = {
+    browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
+  }
+  switch (type) {
+    case 'legacy':
+      targets = {
+        browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
+      }
+      break
+    case 'modern':
+      targets = {
+        browsers: [
+          // The last two versions of each browser, excluding versions
+          // that don't support <script type="module">.
+          'last 2 Chrome versions',
+          'not Chrome < 60',
+          'last 2 Safari versions',
+          'not Safari < 10.1',
+          'last 2 iOS versions',
+          'not iOS < 10.3',
+          'last 2 Firefox versions',
+          'not Firefox < 54',
+          'last 2 Edge versions',
+          'not Edge < 15'
+        ]
+      }
+      break
+    case 'server':
+      targets = {
+        node: 'current'
+      }
+      break
+  }
   const plugins = [
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-class-properties',
@@ -29,25 +62,8 @@ const babelLoader = ({ type = 'legacy', PROD }) => {
               // debug: false,
               modules: false,
               useBuiltIns: 'usage',
-              targets: {
-                browsers:
-                  type === 'modern'
-                    ? [
-                        // The last two versions of each browser, excluding versions
-                        // that don't support <script type="module">.
-                        'last 2 Chrome versions',
-                        'not Chrome < 60',
-                        'last 2 Safari versions',
-                        'not Safari < 10.1',
-                        'last 2 iOS versions',
-                        'not iOS < 10.3',
-                        'last 2 Firefox versions',
-                        'not Firefox < 54',
-                        'last 2 Edge versions',
-                        'not Edge < 15'
-                      ]
-                    : ['> 1%', 'last 2 versions', 'Firefox ESR']
-              }
+              corejs: { version: 3, proposals: true },
+              targets
             }
           ],
           '@babel/preset-react',
