@@ -40,7 +40,7 @@ const babelLoader = ({ type = 'legacy', PROD }) => {
       break
   }
   const plugins = [
-    'dynamic-import-node-babel-7',
+    '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-class-properties',
     'react-loadable/babel'
   ]
