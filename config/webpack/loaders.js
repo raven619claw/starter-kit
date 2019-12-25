@@ -28,7 +28,7 @@ const babelLoader = ({ type = 'legacy', PROD }) => {
             {
               // debug: false,
               modules: false,
-              useBuiltIns: 'entry',
+              useBuiltIns: 'usage',
               targets: {
                 browsers:
                   type === 'modern'
