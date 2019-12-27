@@ -8,7 +8,7 @@ import {
 } from 'server/utils/generateScriptTags'
 import { mobile, desktop, tablet } from 'shared/constants'
 
-export const setServerPushHeaderForScripts = ({ res }) => {
+export const setServerPreloadHeaderForScripts = ({ res }) => {
   const Link = generateScriptsHeader({
     manifest: res.locals.getManifest()
   })

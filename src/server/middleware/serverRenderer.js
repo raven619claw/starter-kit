@@ -6,7 +6,7 @@ import App from 'client/App'
 import {
   getHTML,
   fetchComponentData,
-  setServerPushHeaderForScripts,
+  setServerPreloadHeaderForScripts,
   getDeviceType
 } from 'server/utils/renderHelpers'
 import Loadable from 'react-loadable'
@@ -23,7 +23,7 @@ const stats = __non_webpack_require__(
 const serverRenderer = async (req, res) => {
   const { isRTL, userAgent } = req.clientEnv
   const deviceType = getDeviceType(userAgent)
-  setServerPushHeaderForScripts({ res })
+  setServerPreloadHeaderForScripts({ res })
   res.write('<!DOCTYPE html>')
   const needs = []
   const routes = Routes(deviceType)
