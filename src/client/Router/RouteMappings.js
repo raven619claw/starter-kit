@@ -8,9 +8,11 @@ import {
   LoadableListMobileContainer
 } from 'client/Router/MobileRouteComponents'
 
+import { HOME, LIST } from 'shared/constants'
+
 export const routeNames = {
-  home: 'home',
-  list: 'list'
+  LIST,
+  HOME
 }
 export const routeMapping = () => ({
   home: {
