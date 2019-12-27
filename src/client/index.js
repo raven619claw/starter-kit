@@ -6,11 +6,11 @@ import Loadable from 'react-loadable'
 import parser from 'ua-parser-js'
 import { CacheProvider } from '@emotion/core'
 import {
-  tabletThreshold,
-  mobileThreshold,
-  mobile,
-  tablet,
-  desktop
+  TABLET_THRESHOLD,
+  MOBILE_THRESHOLD,
+  TABLET,
+  MOBILE,
+  DESKTOP
 } from 'shared/constants'
 import getEmotionCache from 'shared/getEmotionCache'
 
@@ -40,13 +40,13 @@ appRender()
 window.addEventListener('resize', () => {
   const { innerWidth } = window
   let updatedDeviceType =
-    parser(window.navigator.userAgent).device.type || desktop
-  if (updatedDeviceType === desktop) {
-    if (innerWidth <= tabletThreshold) {
-      updatedDeviceType = tablet
+    parser(window.navigator.userAgent).device.type || DESKTOP
+  if (updatedDeviceType === DESKTOP) {
+    if (innerWidth <= TABLET_THRESHOLD) {
+      updatedDeviceType = TABLET
     }
-    if (innerWidth <= mobileThreshold) {
-      updatedDeviceType = mobile
+    if (innerWidth <= MOBILE_THRESHOLD) {
+      updatedDeviceType = MOBILE
     }
   }
   if (updatedDeviceType !== deviceType) {

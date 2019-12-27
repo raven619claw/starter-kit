@@ -1,5 +1,5 @@
-export const tabletThreshold = 1024
-export const mobileThreshold = 768
-export const tablet = 'tablet'
-export const mobile = 'mobile'
-export const desktop = 'desktop'
+export const TABLET_THRESHOLD = 1024
+export const MOBILE_THRESHOLD = 768
+export const TABLET = 'tablet'
+export const MOBILE = 'mobile'
+export const DESKTOP = 'desktop'

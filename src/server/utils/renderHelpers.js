@@ -6,7 +6,7 @@ import {
   generateLinkTags,
   getMainScript
 } from 'server/utils/generateScriptTags'
-import { mobile, desktop, tablet } from 'shared/constants'
+import { TABLET, MOBILE, DESKTOP } from 'shared/constants'
 
 export const setServerPreloadHeaderForScripts = ({ res }) => {
   const Link = generateScriptsHeader({
@@ -83,12 +83,12 @@ export const getHTML = ({
   ${getHTMLPostBodyTags({ res, scripts, moduleScripts })}`
 
 export const getDeviceType = ua => {
-  let deviceType = desktop
-  if (ua.device.type === mobile) {
-    deviceType = mobile
+  let deviceType = DESKTOP
+  if (ua.device.type === MOBILE) {
+    deviceType = MOBILE
   }
-  if (ua.device.type === tablet) {
-    deviceType = tablet // this can be tablet if we start having different templates for tabs
+  if (ua.device.type === TABLET) {
+    deviceType = TABLET // this can be tablet if we start having different templates for tabs
   }
   return deviceType
 }
