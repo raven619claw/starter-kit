@@ -35,11 +35,12 @@ export const getHTMLHead = ({ res, styles, isRTL }) => `
       .join('\n')}
   </head>`
 
-const getHTMLScriptObjects = ({ deviceType, isRTL }) => `<script>
-  var deviceType = '${deviceType}'
-  var isRTL = !!${isRTL}
-  document.dir = '${isRTL ? 'rtl' : 'ltr'}'
-</script>`
+const getHTMLScriptObjects = ({ deviceType, isRTL }) => `
+  <script>
+    var deviceType = '${deviceType}'
+    var isRTL = !!${isRTL}
+    document.dir = '${isRTL ? 'rtl' : 'ltr'}'
+  </script>`
 
 const getHTMLPostBodyTags = ({
   res,
