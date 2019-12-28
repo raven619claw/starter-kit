@@ -4,6 +4,11 @@ const clientOptimization = {
   namedModules: false,
   noEmitOnErrors: true, // not to generate falsy bundles.
   runtimeChunk: 'single', // generate a manifest which will work the magic of webpack for sewing the bundles on runtime.
+  // adding these two params sets the correct import names in files and are accessible with same name
+  // downside is it also slows the build
+  minimize: true,
+  concatenateModules: true,
+  //
   minimizer: [
     new TerserWebpackPlugin({
       test: /\.m?js$/i,
@@ -53,7 +58,11 @@ const clientOptimization = {
 
 const serverOptimization = {
   namedModules: false,
-  minimize: false,
+  // adding these two params sets the correct import names in files and are accessible with same name
+  // downside is it also slows the build
+  minimize: true,
+  concatenateModules: true,
+  //
   splitChunks: {
     cacheGroups: {
       default: false,
