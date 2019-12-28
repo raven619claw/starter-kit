@@ -9,11 +9,10 @@ import { withRouter } from 'react-router'
 export default WrappedComponent => {
   const { name: componentName, needs } = WrappedComponent
   // just return the WrappedComponent if needs is undefined or is Server
-  if (!needs || !BROWSER) {
+  if (!needs || !__BROWSER__) {
     return WrappedComponent
   }
-
-  if (BROWSER && DEV) {
+  if (__BROWSER__ && __DEV__) {
     if (!WrappedComponent.needs) {
       console.info(
         'YOU HAVE NOT MENTIONED THE NEEDS FOR COMPONENT: ',

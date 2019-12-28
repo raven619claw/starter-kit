@@ -31,10 +31,11 @@ const config = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      SERVER: true,
-      CLIENT: false,
-      DEV: !PROD,
-      BROWSER: false
+      __SERVER__: true,
+      __CLIENT__: false,
+      __DEV__: !PROD,
+      __BROWSER__: false,
+      __PROD__: PROD
     })
   ],
   optimization: {

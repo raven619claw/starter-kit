@@ -11,7 +11,7 @@
 // TODO: currently have only implemented for one route in mobile
 // need to duplicate this for desktop as well
 export const fulfillClientNeeds = ({ store, location, needItems = [] }) => {
-  if (!BROWSER) {
+  if (!__BROWSER__) {
     return new Promise(resolve => {
       resolve()
     })
@@ -41,7 +41,7 @@ export const fulfillClientUnmountNeeds = ({
 }) => {
   const unMountNeeds = []
   const globalStore = store.getState()
-  if (Object.prototype.toString.call(unMountNeedItems) == '[object Array]') {
+  if (Object.prototype.toString.call(unMountNeedItems) === '[object Array]') {
     unMountNeeds.push(...unMountNeedItems)
   } else {
     unMountNeeds.push(unMountNeedItems)
@@ -66,7 +66,7 @@ export const fulfillClientUnmountNeeds = ({
 // export const renderComponent = ({ store, module, location, cb, waitForApi }) => {
 // fulfillClientNeeds({  store, location, needItems: module.default.needs || [] }).then(() => {
 // check if env is browser and waitForAPI is there then render only after promise.all resolves
-// if (BROWSER && waitForApi) {
+// if (__BROWSER__ && waitForApi) {
 // cb(null, module.default);
 // }
 // Handle catch for this
@@ -74,7 +74,7 @@ export const fulfillClientUnmountNeeds = ({
 // can reason as to which should come before the cb or fulfillClientNeeds
 // for now fulfillClientNeeds is up as its just async calls
 // if on server or if on client dont have to wait for API then call cb
-//   if (!BROWSER || !waitForApi) {
+//   if (!__BROWSER__ || !waitForApi) {
 //     cb(null, module.default);
 //   }
 // };

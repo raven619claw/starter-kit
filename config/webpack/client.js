@@ -49,11 +49,11 @@ const config = {
     new WriteFilePlugin(),
     assetsPluginInstance,
     new webpack.DefinePlugin({
-      BROWSER: true,
-      DEV: !PROD,
-      SERVER: false,
-      CLIENT: true,
-      PROD
+      __BROWSER__: true,
+      __DEV__: !PROD,
+      __SERVER__: false,
+      __CLIENT__: true,
+      __PROD__: PROD
     }),
     new Visualizer({
       filename: './statistics.html'
