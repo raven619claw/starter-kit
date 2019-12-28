@@ -48,6 +48,8 @@ const config = {
     ...clientPlugins,
     new WriteFilePlugin(),
     assetsPluginInstance,
+    // given these are globals which would be directly accessible in webpack and node
+    // adding __ to var name to denote the same
     new webpack.DefinePlugin({
       __BROWSER__: true,
       __DEV__: !PROD,

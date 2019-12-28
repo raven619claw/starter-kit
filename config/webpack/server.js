@@ -30,6 +30,8 @@ const config = {
       warning.indexOf('Conflicting order between:') === -1
   },
   plugins: [
+    // given these are globals which would be directly accessible in webpack and node
+    // adding __ to var name to denote the same
     new webpack.DefinePlugin({
       __SERVER__: true,
       __CLIENT__: false,
