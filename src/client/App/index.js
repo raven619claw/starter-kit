@@ -18,10 +18,10 @@ export default class App extends Component {
         <nav>
           <ul>
             <li>
-              <Link to={routePaths[HOME]}>Home</Link>
+              <Link to={routePaths[HOME]}>{HOME}</Link>
             </li>
             <li>
-              <Link to={routePaths[LIST]}>List</Link>
+              <Link to={routePaths[LIST]}>{LIST}</Link>
             </li>
           </ul>
         </nav>
