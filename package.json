@@ -84,6 +84,7 @@
     "express": "^4.17.1",
     "express-manifest-helpers": "^0.6.0",
     "path": "^0.12.7",
+    "prop-types": "^15.7.2",
     "react": "^16.11.0",
     "react-auto-bind": "^0.4.2",
     "react-dom": "^16.11.0",

@@ -37,7 +37,7 @@
     "import/first": "off",
     "no-return-assign": "warn",
     "no-use-before-define": ["warn", { "functions": true, "classes": true }],
-    "react/prefer-stateless-function": "warn",
+    "react/prefer-stateless-function": "off",
     "import/extensions": [
       "error",
       "never",
