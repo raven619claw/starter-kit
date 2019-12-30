@@ -38,6 +38,9 @@ const config = {
       __DEV__: !PROD,
       __BROWSER__: false,
       __PROD__: PROD
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
     })
   ],
   optimization: {
