@@ -22,6 +22,10 @@ app.use(
   })
 )
 setupCustomMiddlewares(app)
+// react Loadable is no longer maintained
+// currently Suspense only supports client side but
+// is in the roadmap for ssr release as well
+// at that time switch Loadable with Suspense
 Loadable.preloadAll().then(() => {
   app.listen(PORT, () => {
     // eslint-disable-next-line no-console
