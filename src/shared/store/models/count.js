@@ -1,5 +1,5 @@
-export default {
-  state: 0, // initial state
+export default initialState => ({
+  state: 0 + initialState, // initial state
   reducers: {
     // handle state changes with pure functions
     increment(state, payload) {
@@ -14,4 +14,4 @@ export default {
       dispatch.count.increment(payload)
     }
   })
-}
+})

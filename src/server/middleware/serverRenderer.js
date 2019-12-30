@@ -6,8 +6,7 @@ import App from 'client/App'
 import {
   getHTML,
   fetchComponentData,
-  setServerPreloadHeaderForScripts,
-  getDeviceType
+  setServerPreloadHeaderForScripts
 } from 'server/utils/renderHelpers'
 import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
@@ -15,6 +14,7 @@ import { CacheProvider } from '@emotion/core'
 import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
 import createStore from 'shared/store'
+import setInitialState from 'server/utils/setInitialState'
 
 const { paths } = require('config/helper')
 
@@ -23,11 +23,13 @@ const stats = __non_webpack_require__(
   `${paths.clientBuild}/react-loadable.json`
 )
 const serverRenderer = async (req, res) => {
-  const { isRTL, userAgent } = req.clientEnv
-  const deviceType = getDeviceType(userAgent)
   setServerPreloadHeaderForScripts({ res })
   res.write('<!DOCTYPE html>')
   const needs = []
+  const initialState = setInitialState({ req, res })
+  const {
+    deviceEnv: { isRTL, deviceType }
+  } = initialState
   const routes = Routes(deviceType)
   const loadableComponentsPromiseArray = routes
     .map(route => {
@@ -48,7 +50,7 @@ const serverRenderer = async (req, res) => {
 
     await fetchComponentData(needs, {}) // maybe pass store here in future and other stuff
     const modules = []
-    const store = createStore()
+    const store = createStore(initialState)
     const content = renderToString(
       <Loadable.Capture report={moduleName => modules.push(moduleName)}>
         <Provider store={store}>
@@ -75,6 +77,7 @@ const serverRenderer = async (req, res) => {
 
     res.end(
       getHTML({
+        initialState,
         isRTL,
         res,
         content,

@@ -1,2 +1,2 @@
-export { default as count } from './count'
-export { default as author } from './author'
+export { default as countModel } from './count'
+export { default as deviceEnvModel } from './deviceEnv'
