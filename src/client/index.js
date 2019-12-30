@@ -13,6 +13,8 @@ import {
   DESKTOP
 } from 'shared/constants'
 import getEmotionCache from 'shared/getEmotionCache'
+import { Provider } from 'react-redux'
+import createStore from 'shared/store'
 
 let { deviceType } = window
 deviceType =
@@ -23,15 +25,17 @@ const { isRTL } = window
 if (module.hot) {
   module.hot.accept()
 }
-
+const store = createStore()
 const appRender = async () => {
   await Loadable.preloadReady()
   hydrate(
-    <CacheProvider value={getEmotionCache(isRTL)}>
-      <Router>
-        <App deviceType={deviceType} />
-      </Router>
-    </CacheProvider>,
+    <Provider store={store}>
+      <CacheProvider value={getEmotionCache(isRTL)}>
+        <Router>
+          <App deviceType={deviceType} />
+        </Router>
+      </CacheProvider>
+    </Provider>,
     document.getElementById('root')
   )
 }

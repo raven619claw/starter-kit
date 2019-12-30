@@ -13,6 +13,8 @@ import Loadable from 'react-loadable'
 import { getBundles } from 'react-loadable/webpack'
 import { CacheProvider } from '@emotion/core'
 import getEmotionCache from 'shared/getEmotionCache'
+import { Provider } from 'react-redux'
+import createStore from 'shared/store'
 
 const { paths } = require('config/helper')
 
@@ -46,13 +48,16 @@ const serverRenderer = async (req, res) => {
 
     await fetchComponentData(needs, {}) // maybe pass store here in future and other stuff
     const modules = []
+    const store = createStore()
     const content = renderToString(
       <Loadable.Capture report={moduleName => modules.push(moduleName)}>
-        <CacheProvider value={getEmotionCache(isRTL)}>
-          <StaticRouter location={req.url} context={context}>
-            <App deviceType={deviceType} />
-          </StaticRouter>
-        </CacheProvider>
+        <Provider store={store}>
+          <CacheProvider value={getEmotionCache(isRTL)}>
+            <StaticRouter location={req.url} context={context}>
+              <App deviceType={deviceType} />
+            </StaticRouter>
+          </CacheProvider>
+        </Provider>
       </Loadable.Capture>
     )
 

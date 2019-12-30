@@ -1,10 +1,19 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
-// eslint-disable-next-line react/prefer-stateless-function
+// sample connect
+@connect(state => ({
+  count: state.count
+}))
 class Home extends Component {
   render() {
-    return <div>Home Desktop</div>
+    const { count } = this.props
+    return (
+      <div>
+        Home Desktop : <span>{count}</span>
+      </div>
+    )
   }
 }
 

@@ -40,6 +40,7 @@ const babelLoader = ({ type = 'legacy', PROD }) => {
       break
   }
   const plugins = [
+    ['@babel/plugin-proposal-decorators', { legacy: true }],
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-class-properties',
     'react-loadable/babel'

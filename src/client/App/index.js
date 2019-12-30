@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom'
 // but in long term would help organise and keep single source for route paths
 import { routePaths } from 'shared/urlConfig'
 import { HOME, LIST } from 'shared/constants'
+
 import { style } from './styles'
 import './index.scss'
 
 // this is the entry file to the react app
-// eslint-disable-next-line react/prefer-stateless-function
-export default class App extends Component {
+class App extends Component {
   render() {
     const { deviceType } = this.props
     return (
@@ -30,3 +30,5 @@ export default class App extends Component {
     )
   }
 }
+
+export default App
