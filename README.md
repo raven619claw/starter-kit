@@ -10,3 +10,5 @@ The no bullshit starter kit for React
 6. ESLINT
 7. Express
 8. Storybook
+
+TO RUN: `yarn start:dev:inspect`
