@@ -1,6 +1,6 @@
 # starter-kit(WIP)
 
-The no bullshit starter kit for express and webpack with HMR
+The no bullshit starter kit for React
 
 1. webpack 4
 2. Babel 7
