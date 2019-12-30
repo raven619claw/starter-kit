@@ -1,7 +1,8 @@
 import React from 'react'
 import Loadable from 'react-loadable'
 
-const RouteComponentLoader = () => <div>loading...</div>
+const RouteComponentLoader = ({ pastDelay }) =>
+  pastDelay ? <div>loading...</div> : null
 
 export const LoadableListMobileContainer = Loadable({
   loader: () =>
@@ -11,7 +12,8 @@ export const LoadableListMobileContainer = Loadable({
       /* webpackPrefetch: true */
       'client/MobileContainers/List'
     ),
-  loading: RouteComponentLoader
+  loading: RouteComponentLoader,
+  delay: 300
 })
 
 export const LoadableHomeMobileContainer = Loadable({
@@ -22,5 +24,6 @@ export const LoadableHomeMobileContainer = Loadable({
       /* webpackPrefetch: true */
       'client/MobileContainers/Home'
     ),
-  loading: RouteComponentLoader
+  loading: RouteComponentLoader,
+  delay: 300
 })
