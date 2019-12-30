@@ -5,12 +5,22 @@ const RouteComponentLoader = () => <div>loading...</div>
 
 export const LoadableListMobileContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "ListMobile" */ 'client/MobileContainers/List'),
+    import(
+      /* webpackChunkName: "ListMobile" */
+      /* webpackMode: "lazy" */
+      /* webpackPrefetch: true */
+      'client/MobileContainers/List'
+    ),
   loading: RouteComponentLoader
 })
 
 export const LoadableHomeMobileContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "HomeMobile" */ 'client/MobileContainers/Home'),
+    import(
+      /* webpackChunkName: "HomeMobile" */
+      /* webpackMode: "lazy" */
+      /* webpackPrefetch: true */
+      'client/MobileContainers/Home'
+    ),
   loading: RouteComponentLoader
 })

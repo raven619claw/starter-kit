@@ -5,12 +5,22 @@ const RouteComponentLoader = () => <div>loading...</div>
 
 export const LoadableListContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "List" */ 'client/DesktopContainers/List'),
+    import(
+      /* webpackChunkName: "List" */
+      /* webpackMode: "lazy" */
+      /* webpackPrefetch: true */
+      'client/DesktopContainers/List'
+    ),
   loading: RouteComponentLoader
 })
 
 export const LoadableHomeContainer = Loadable({
   loader: () =>
-    import(/* webpackChunkName: "Home" */ 'client/DesktopContainers/Home'),
+    import(
+      /* webpackChunkName: "Home" */
+      /* webpackMode: "lazy" */
+      /* webpackPrefetch: true */
+      'client/DesktopContainers/Home'
+    ),
   loading: RouteComponentLoader
 })
