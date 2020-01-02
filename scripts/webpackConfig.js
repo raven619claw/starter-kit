@@ -55,6 +55,7 @@ const build = async () => {
   ;[
     serverCompiler,
     (!IGNORE_MODERN_BUILD && clientModernCompiler) || undefined,
+    // TODO:check if this is needed as the watch is handled by devserver
     clientCompiler
   ].map(compiler => {
     if (!compiler) {
