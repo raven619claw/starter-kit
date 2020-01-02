@@ -8,7 +8,7 @@ const {
   DEVSERVER_HOST,
   WEBPACK_PORT,
   CDN_PATH,
-  IGNORE_MODERN
+  IGNORE_MODERN_BUILD
 } = require('../config/constants')
 
 const [[clientConfig, clientModernConfig], serverConfig] = webpackConfig
@@ -54,19 +54,18 @@ const serverCompiler = multiCompiler.compilers.find(
 const build = async () => {
   ;[
     serverCompiler,
-    (!IGNORE_MODERN && clientModernCompiler) || undefined,
+    (!IGNORE_MODERN_BUILD && clientModernCompiler) || undefined,
     clientCompiler
   ].map(compiler => {
     if (!compiler) {
       return
     }
-    // TODO: forgot why i added this check
-    // commenting for now
-    // if facing issues can check this
-    // maybe this is for HMR TO work for specific builds either client or modern client
-    // if (HOT_RELOAD && compiler.name === 'client') {
-    //   return
-    // }
+    // this is added here as we dont want to watch the client compiler manually
+    // the watch is handled by webpack dev server which runs HMR and watch itself
+    // if you want to debug clientModern with hotreload replace compiler here
+    if (HOT_RELOAD && compiler.name === 'client') {
+      return
+    }
     compiler.watch({}, (error, stats) => {
       const info = stats.toJson()
       if (!error && !stats.hasErrors()) {
@@ -92,9 +91,9 @@ const build = async () => {
     await Promise.all([
       compilerPromise('client', clientCompiler),
       compilerPromise('server', serverCompiler),
-      !IGNORE_MODERN
-        ? compilerPromise('clientModern', clientModernCompiler)
-        : null
+      (!IGNORE_MODERN_BUILD &&
+        compilerPromise('clientModern', clientModernCompiler)) ||
+        null
     ])
 
     logMessage('Done!', 'info')
