@@ -16,9 +16,9 @@ import {
 } from 'shared/constants'
 import { connect } from 'react-redux'
 import parser from 'ua-parser-js'
-import { style } from './styles'
+import { style } from './style'
 
-import './index.scss'
+import './style.scss'
 
 // this is the entry file to the react app
 @connect(
