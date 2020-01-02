@@ -8,7 +8,6 @@ export const LoadableListMobileContainer = Loadable({
   loader: () =>
     import(
       /* webpackChunkName: "ListMobile" */
-      /* webpackMode: "lazy" */
       /* webpackPrefetch: true */
       'client/MobileContainers/List'
     ),
@@ -20,7 +19,6 @@ export const LoadableHomeMobileContainer = Loadable({
   loader: () =>
     import(
       /* webpackChunkName: "HomeMobile" */
-      /* webpackMode: "lazy" */
       /* webpackPrefetch: true */
       'client/MobileContainers/Home'
     ),

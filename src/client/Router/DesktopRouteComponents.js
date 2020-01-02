@@ -8,7 +8,6 @@ export const LoadableListContainer = Loadable({
   loader: () =>
     import(
       /* webpackChunkName: "List" */
-      /* webpackMode: "lazy" */
       /* webpackPrefetch: true */
       'client/DesktopContainers/List'
     ),
@@ -20,7 +19,6 @@ export const LoadableHomeContainer = Loadable({
   loader: () =>
     import(
       /* webpackChunkName: "Home" */
-      /* webpackMode: "lazy" */
       /* webpackPrefetch: true */
       'client/DesktopContainers/Home'
     ),
