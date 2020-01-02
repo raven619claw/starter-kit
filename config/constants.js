@@ -8,5 +8,6 @@ module.exports = {
   DEV: process.env.NODE_ENV !== 'production',
   WATCH: process.env.WATCH,
   HOT_RELOAD: process.env.HOT_RELOAD,
-  INSPECT: process.env.INSPECT
+  INSPECT: process.env.INSPECT,
+  IGNORE_MODERN: process.env.IGNORE_MODERN
 }

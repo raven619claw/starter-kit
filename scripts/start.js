@@ -26,7 +26,7 @@ const start = async () => {
       watchOptions
     })
   )
-
+  // if you want to debug clientModern with hotreload replace compiler here
   app.use(webpackHotMiddleware(clientCompiler))
 
   app.use('/static', express.static(paths.clientBuild))
