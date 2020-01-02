@@ -8,8 +8,6 @@
 // for a perfect reference see SavedHotels/Index container
 // because of this now you dont need to call APIs in componentDidMount of that route
 
-// TODO: currently have only implemented for one route in mobile
-// need to duplicate this for desktop as well
 export const fulfillClientNeeds = ({ store, location, needItems = [] }) => {
   if (!__BROWSER__) {
     return new Promise(resolve => {
