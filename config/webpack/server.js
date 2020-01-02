@@ -38,12 +38,10 @@ const config = {
       __DEV__: !PROD,
       __BROWSER__: false,
       __PROD__: PROD
+    }),
+    new webpack.optimize.LimitChunkCountPlugin({
+      maxChunks: 1
     })
-    // TODO: tried to make the server chunks into single output but for some reason this breaks
-    // rebuilds on webpack
-    // new webpack.optimize.LimitChunkCountPlugin({
-    //   maxChunks: 1
-    // })
   ],
   optimization: {
     ...serverOptimization
