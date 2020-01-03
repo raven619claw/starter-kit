@@ -1,27 +1,18 @@
 import React from 'react'
-import Loadable from 'react-loadable'
+import loadable from '@loadable/component'
 
-const RouteComponentLoader = ({ pastDelay }) =>
-  pastDelay ? <div>loading...</div> : null
+const RouteComponentLoader = <div>loading...</div>
 
-export const LoadableListMobileContainer = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "ListMobile" */
-      /* webpackPrefetch: true */
-      'client/MobileContainers/List'
-    ),
-  loading: RouteComponentLoader,
-  delay: 300
-})
+export const LoadableListMobileContainer = loadable(
+  () => import('client/MobileContainers/List'),
+  {
+    fallback: RouteComponentLoader
+  }
+)
 
-export const LoadableHomeMobileContainer = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "HomeMobile" */
-      /* webpackPrefetch: true */
-      'client/MobileContainers/Home'
-    ),
-  loading: RouteComponentLoader,
-  delay: 300
-})
+export const LoadableHomeMobileContainer = loadable(
+  () => import('client/MobileContainers/Home'),
+  {
+    fallback: RouteComponentLoader
+  }
+)

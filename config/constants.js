@@ -9,5 +9,8 @@ module.exports = {
   WATCH: process.env.WATCH,
   HOT_RELOAD: process.env.HOT_RELOAD,
   INSPECT: process.env.INSPECT,
-  IGNORE_MODERN_BUILD: process.env.IGNORE_MODERN_BUILD
+  IGNORE_MODERN_BUILD: process.env.IGNORE_MODERN_BUILD,
+  LEGACY: 'legacy',
+  MODERN: 'modern',
+  SERVER: 'server'
 }

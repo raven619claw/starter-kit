@@ -1,27 +1,18 @@
 import React from 'react'
-import Loadable from 'react-loadable'
+import loadable from '@loadable/component'
 
-const RouteComponentLoader = ({ pastDelay }) =>
-  pastDelay ? <div>loading...</div> : null
+const RouteComponentLoader = <div>loading...</div>
 
-export const LoadableListContainer = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "List" */
-      /* webpackPrefetch: true */
-      'client/DesktopContainers/List'
-    ),
-  loading: RouteComponentLoader,
-  delay: 300
-})
+export const LoadableListContainer = loadable(
+  () => import('client/DesktopContainers/List'),
+  {
+    fallback: RouteComponentLoader
+  }
+)
 
-export const LoadableHomeContainer = Loadable({
-  loader: () =>
-    import(
-      /* webpackChunkName: "Home" */
-      /* webpackPrefetch: true */
-      'client/DesktopContainers/Home'
-    ),
-  loading: RouteComponentLoader,
-  delay: 300
-})
+export const LoadableHomeContainer = loadable(
+  () => import('client/DesktopContainers/Home'),
+  {
+    fallback: RouteComponentLoader
+  }
+)

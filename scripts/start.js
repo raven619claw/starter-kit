@@ -19,6 +19,7 @@ const start = async () => {
   })
 
   // if you want to debug clientModern with hotreload replace compiler here
+  // TODO: currently does not work for modern
   app.use(
     webpackDevMiddleware(clientCompiler, {
       publicPath: clientConfig.output.publicPath,
@@ -27,6 +28,7 @@ const start = async () => {
     })
   )
   // if you want to debug clientModern with hotreload replace compiler here
+  // TODO: currently does not work for modern
   app.use(webpackHotMiddleware(clientCompiler))
 
   app.use('/static', express.static(paths.clientBuild))

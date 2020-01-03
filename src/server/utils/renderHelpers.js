@@ -1,17 +1,27 @@
 import {
-  generateScriptTags,
-  getScriptHtmlLine,
-  getStyleHtmlLine,
-  generateScriptsHeader,
-  generateLinkTags,
-  getMainScript
+  getLinkTagsFilteredOnRTL,
+  getStyleTagsFilteredOnRTL,
+  getPreloadHeaderLine
 } from 'server/utils/generateScriptTags'
 import { TABLET, MOBILE, DESKTOP } from 'shared/constants'
 
-export const setServerPreloadHeaderForScripts = ({ res }) => {
-  const Link = generateScriptsHeader({
-    manifest: res.locals.getManifest()
-  })
+export const setServerPreloadHeaderForScripts = ({ extractor, res, isRTL }) => {
+  const { publicPath } = extractor.stats
+  const mainChunkLinks = extractor.stats.namedChunkGroups.main.assets
+    .map(link => ({
+      linkName: publicPath + link,
+      type: link.indexOf('.css') > -1 ? 'style' : 'script'
+    }))
+    .filter(({ type, linkName }) => {
+      if (type === 'style') {
+        if (isRTL) {
+          return linkName.indexOf('rtl.css') > -1
+        }
+        return linkName.indexOf('rtl.css') === -1
+      }
+      return true
+    })
+  const Link = mainChunkLinks.map(link => getPreloadHeaderLine(link)).join(',')
   res.set({
     Link
   })
@@ -21,18 +31,16 @@ export const fetchComponentData = (needs, appData) => {
   const needsPromises = needs.map(need => need(appData))
   return Promise.all(needsPromises)
 }
-
-export const getHTMLHead = ({ res, styles, isRTL }) => `
+// add react helmet here
+export const getHTMLHead = ({ styleTags, isRTL, linkTags }) => `
   <html>
     <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0">
-    ${generateLinkTags({
-      manifest: res.locals.getManifest()
+    ${getLinkTagsFilteredOnRTL({ linkTags, isRTL })}
+    ${getStyleTagsFilteredOnRTL({
+      styleTags,
+      isRTL
     })}
-    ${styles
-      .filter(style => style.file.indexOf('rtl') > -1 === !!isRTL)
-      .map(style => getStyleHtmlLine({ linkName: style.publicPath }))
-      .join('\n')}
   </head>`
 
 const getHTMLScriptObjects = ({ isRTL, initialState }) => `
@@ -41,26 +49,7 @@ const getHTMLScriptObjects = ({ isRTL, initialState }) => `
     var __INITIAL_STATE__ = ${JSON.stringify(initialState)}
   </script>`
 
-const getHTMLPostBodyTags = ({
-  res,
-  scripts,
-  moduleScripts
-}) => `${generateScriptTags({ manifest: res.locals.getManifest() })}
-${scripts
-  .map(script => getScriptHtmlLine({ scriptName: script.publicPath }))
-  .join('\n')}
-${moduleScripts
-  .map(moduleScript =>
-    getScriptHtmlLine({
-      scriptName: moduleScript.publicPath,
-      type: 'module'
-    })
-  )
-  .join('\n')}
-  ${getMainScript({
-    manifest: res.locals.getManifest()
-  })}
-</html>`
+const getHTMLPostBodyTags = ({ scriptTags }) => `${scriptTags.join('')}</html>`
 
 const getHTMLBody = ({ content }) => `
     <body>
@@ -70,17 +59,17 @@ const getHTMLBody = ({ content }) => `
 export const getHTML = ({
   res,
   content,
-  scripts,
-  moduleScripts,
   deviceType,
-  styles,
+  scriptTags,
+  linkTags,
+  styleTags,
   isRTL,
   initialState
 }) =>
-  `${getHTMLHead({ res, styles, isRTL })}
+  `${getHTMLHead({ res, styleTags, isRTL, linkTags })}
   ${getHTMLBody({ content })}
   ${getHTMLScriptObjects({ deviceType, isRTL, initialState })}
-  ${getHTMLPostBodyTags({ res, scripts, moduleScripts })}`
+  ${getHTMLPostBodyTags({ res, scriptTags })}`
 
 export const getDeviceType = ua => {
   let deviceType = DESKTOP

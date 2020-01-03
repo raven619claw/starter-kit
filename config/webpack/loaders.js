@@ -1,21 +1,21 @@
 const MiniCssExtractPlugin = require('mini-css-extract-plugin-with-rtl') // have replaced mini-css-extract-plugin with the rtl if facing issues revert it
 
 const autoPrefixer = require('autoprefixer')
-
+const { LEGACY, MODERN, SERVER } = require('../constants')
 const cssRegex = /\.scss$/
 const cssModuleRegex = /\.module\.scss$/
 
-const babelLoader = ({ type = 'legacy', PROD }) => {
+const babelLoader = ({ type = LEGACY, PROD }) => {
   let targets = {
     browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
   }
   switch (type) {
-    case 'legacy':
+    case LEGACY:
       targets = {
         browsers: ['> 1%', 'last 2 versions', 'Firefox ESR']
       }
       break
-    case 'modern':
+    case MODERN:
       targets = {
         browsers: [
           // The last two versions of each browser, excluding versions
@@ -33,7 +33,7 @@ const babelLoader = ({ type = 'legacy', PROD }) => {
         ]
       }
       break
-    case 'server':
+    case SERVER:
       targets = {
         node: 'current'
       }
@@ -43,10 +43,10 @@ const babelLoader = ({ type = 'legacy', PROD }) => {
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-class-properties',
-    'react-loadable/babel'
+    '@loadable/babel-plugin'
   ]
   // for some reason @babel/plugin-transform-runtime does not start the server so just added this check
-  if (type === 'legacy') {
+  if (type === LEGACY) {
     plugins.push('@babel/plugin-transform-runtime')
   }
   return {
@@ -159,7 +159,7 @@ const fileLoaderServer = {
 const client = ({ PROD }) => [
   {
     oneOf: [
-      babelLoader({ PROD, type: 'legacy' }),
+      babelLoader({ PROD, type: LEGACY }),
       cssLoaderClient({ PROD }),
       urlLoaderClient,
       fileLoaderClient
@@ -169,7 +169,7 @@ const client = ({ PROD }) => [
 const server = ({ PROD }) => [
   {
     oneOf: [
-      babelLoader({ PROD, type: 'server' }),
+      babelLoader({ PROD, type: SERVER }),
       cssLoaderServer,
       urlLoaderServer,
       fileLoaderServer
@@ -178,7 +178,9 @@ const server = ({ PROD }) => [
 ]
 const modernClient = ({ PROD }) => [
   {
-    oneOf: [babelLoader({ PROD, type: 'modern' }), clientModernIgnoreLoader]
+    // to get modern config to spit css chunks which can be read by loadable-components stats
+    // we need to keep this same as client config
+    oneOf: [babelLoader({ PROD, type: MODERN }), clientModernIgnoreLoader]
   }
 ]
 module.exports = {

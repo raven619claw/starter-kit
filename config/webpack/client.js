@@ -1,26 +1,22 @@
 const webpack = require('webpack')
-const Visualizer = require('webpack-visualizer-plugin')
-const AssetsPlugin = require('assets-webpack-plugin')
-const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
-const WriteFilePlugin = require('write-file-webpack-plugin')
 const {
   client: clientLoaders,
   modernClient: modernClientLoaders
 } = require('./loaders')
 const { resolvers } = require('./resolvers')
 const { client: clientOptimization } = require('./optimizations')
-const { client: clientPlugins } = require('./plugins')
-const { getFullPath, processManifestOutput, paths } = require('../helper')
+const { clientPlugins } = require('./plugins')
+const { getFullPath, paths } = require('../helper')
 const stats = require('./stats')
-const { PROD } = require('../constants')
-const assetsPluginInstance = new AssetsPlugin({
-  processOutput(assets) {
-    return processManifestOutput(assets)
-  },
-  filename: 'assetsManifest.json',
-  useCompilerPath: true,
-  prettyPrint: true
-})
+const { LEGACY, PROD, MODERN } = require('../constants')
+
+const getPlugin = ({ type }) => {
+  const plugins = clientPlugins({ type })
+  if (!PROD) {
+    plugins.push(new webpack.HotModuleReplacementPlugin())
+  }
+  return plugins
+}
 const config = {
   mode: PROD ? 'production' : 'development',
   devtool: PROD ? false : 'eval-source-map',
@@ -44,29 +40,13 @@ const config = {
   optimization: {
     ...clientOptimization
   },
-  plugins: [
-    ...clientPlugins,
-    new WriteFilePlugin(),
-    assetsPluginInstance,
-    // given these are globals which would be directly accessible in webpack and node
-    // adding __ to var name to denote the same
-    new webpack.DefinePlugin({
-      __BROWSER__: true,
-      __DEV__: !PROD,
-      __SERVER__: false,
-      __CLIENT__: true,
-      __PROD__: PROD
-    }),
-    new Visualizer({
-      filename: './statistics.html'
-    }),
-    new OptimizeCssAssetsPlugin()
-  ],
+  plugins: getPlugin({ type: LEGACY }),
   stats
 }
 
 const modernConfig = {
   ...config,
+  plugins: getPlugin({ type: MODERN }),
   name: 'clientModern',
   module: {
     rules: modernClientLoaders({ PROD })

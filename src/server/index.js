@@ -6,10 +6,10 @@ import manifestHelpers from 'express-manifest-helpers'
 import bodyParser from 'body-parser'
 import { PORT } from 'config/constants'
 import { paths, logMessage } from 'config/helper'
-import Loadable from 'react-loadable'
 import setupCustomMiddlewares from 'server/middleware'
 
 const app = express()
+app.get('/favicon.ico', (req, res) => res.sendStatus(204))
 app.use(cors())
 app.use(paths.publicPath, express.static(path.join(paths.clientBuild)))
 app.use(bodyParser.json())
@@ -22,15 +22,10 @@ app.use(
   })
 )
 setupCustomMiddlewares(app)
-// react Loadable is no longer maintained
-// currently Suspense only supports client side but
-// is in the roadmap for ssr release as well
-// at that time switch Loadable with Suspense
-Loadable.preloadAll().then(() => {
-  app.listen(PORT, () => {
-    // eslint-disable-next-line no-console
-    logMessage(`App is running: 🌎 http://localhost:${PORT || 8500}`)
-  })
+
+app.listen(PORT, () => {
+  // eslint-disable-next-line no-console
+  logMessage(`App is running: 🌎 http://localhost:${PORT || 8500}`)
 })
 
 export default app

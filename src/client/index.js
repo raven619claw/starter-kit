@@ -1,8 +1,8 @@
 import React from 'react'
+import { loadableReady } from '@loadable/component'
 import { hydrate } from 'react-dom'
 import App from 'client/App'
 import { BrowserRouter as Router } from 'react-router-dom'
-import Loadable from 'react-loadable'
 import { CacheProvider } from '@emotion/core'
 import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
@@ -12,15 +12,11 @@ if (module.hot) {
   module.hot.accept()
 }
 const initialState = __INITIAL_STATE__
-const {
-  deviceEnv: { isRTL }
-} = initialState
 const store = createStore(initialState)
-const appRender = async () => {
-  await Loadable.preloadReady()
+const appRender = () => {
   hydrate(
     <Provider store={store}>
-      <CacheProvider value={getEmotionCache(isRTL)}>
+      <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
         <Router>
           <App />
         </Router>
@@ -30,4 +26,6 @@ const appRender = async () => {
   )
 }
 
-appRender()
+loadableReady(() => {
+  appRender()
+})
