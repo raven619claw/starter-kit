@@ -38,6 +38,10 @@ if (PROD) {
   clientConfig.output.publicPath = [CDN_PATH, publicPath]
     .join('/')
     .replace(/([^:+])\/+/g, '$1/')
+  const { publicPath: publicPathModern } = clientModernConfig.output
+  clientModernConfig.output.publicPath = [CDN_PATH, publicPathModern]
+    .join('/')
+    .replace(/([^:+])\/+/g, '$1/')
 }
 const multiCompiler = webpack([clientConfig, serverConfig, clientModernConfig])
 
