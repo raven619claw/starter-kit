@@ -38,7 +38,7 @@ export const fulfillClientUnmountNeeds = ({
   unMountNeedItems = []
 }) => {
   const unMountNeeds = []
-  const globalStore = store.getState()
+  // const globalStore = store.getState()
   if (Object.prototype.toString.call(unMountNeedItems) === '[object Array]') {
     unMountNeeds.push(...unMountNeedItems)
   } else {
@@ -47,8 +47,7 @@ export const fulfillClientUnmountNeeds = ({
   const promises = unMountNeeds.map(unMountNeed =>
     unMountNeed({
       store,
-      location,
-      userAuthenticationDetails: globalStore.userAuthenticationDetails
+      location
     })
   )
   return Promise.all(promises)
