@@ -11,7 +11,6 @@ import { ThemeProvider } from 'emotion-theming'
 if (module.hot) {
   module.hot.accept()
 }
-
 const theme = __THEME__
 const initialState = __INITIAL_STATE__
 const store = createStore(initialState)

@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import ContainerHOC from 'client/CommonComponents/ContainerHOC'
-
-// sample connect
-@connect(state => ({
-  count: state.count
-}))
+import { withTheme } from 'emotion-theming'
+import ConnectWithHOC from 'client/CommonComponents/ConnectWithHOC'
+@withTheme
 class Home extends Component {
   render() {
     const { count } = this.props
@@ -22,4 +18,7 @@ Home.needs = () =>
     resolve(1)
   })
 
-export default ContainerHOC(Home)
+const mapStateToProps = state => ({
+  count: state.count
+})
+export default ConnectWithHOC(mapStateToProps)(Home)

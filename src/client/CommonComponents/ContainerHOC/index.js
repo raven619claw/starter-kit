@@ -5,6 +5,7 @@ import {
   fulfillClientUnmountNeeds
 } from 'client/utils/fulfillClientNeeds'
 import { withRouter } from 'react-router'
+import { getStore } from 'shared/store'
 
 export default WrappedComponent => {
   const { name: componentName, needs } = WrappedComponent
@@ -38,8 +39,8 @@ export default WrappedComponent => {
     }
 
     async loadData({ props }) {
-      const store = {} || this.context.store
       this.setState({ loaded: false })
+      const store = getStore()
       try {
         await fulfillClientNeeds({
           store,
