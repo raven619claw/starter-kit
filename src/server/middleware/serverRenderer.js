@@ -22,13 +22,15 @@ const { paths } = require('config/helper')
 const statsLegacy = __non_webpack_require__(
   `${paths.clientBuild}/loadable-legacy-stats.json`
 )
-// eslint-disable-next-line no-undef
-const statsModern = __non_webpack_require__(
-  `${paths.clientBuild}/loadable-modern-stats.json`
-)
+
+const statsModern =
+  !__IGNORE_MODERN_BUILD__ &&
+  // eslint-disable-next-line no-undef
+  __non_webpack_require__(`${paths.clientBuild}/loadable-modern-stats.json`)
 
 const extractorLegacy = new ChunkExtractor({ stats: statsLegacy })
-const extractorModern = new ChunkExtractor({ stats: statsModern })
+const extractorModern =
+  !__IGNORE_MODERN_BUILD__ && new ChunkExtractor({ stats: statsModern })
 const serverRenderer = async (req, res) => {
   const theme = getTheme({ req })
   const initialState = setInitialState({ req, res })

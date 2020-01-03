@@ -8,7 +8,7 @@ const Visualizer = require('webpack-visualizer-plugin')
 const AssetsPlugin = require('assets-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const serviceWorker = require('./ServiceWorkerPlugin')
-const { LEGACY, PROD } = require('../constants')
+const { LEGACY, PROD, IGNORE_MODERN_BUILD } = require('../constants')
 const { processManifestOutput } = require('../helper')
 const assetsPluginInstance = new AssetsPlugin({
   processOutput(assets) {
@@ -28,7 +28,8 @@ const clientPlugins = ({ type }) => [
     __DEV__: !PROD,
     __SERVER__: false,
     __CLIENT__: true,
-    __PROD__: PROD
+    __PROD__: PROD,
+    __IGNORE_MODERN_BUILD__: IGNORE_MODERN_BUILD
   }),
   new Visualizer({
     filename: './statistics.html'

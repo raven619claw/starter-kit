@@ -3,7 +3,7 @@ const { server: serverLoaders } = require('./loaders')
 const { resolvers } = require('./resolvers')
 const { getFullPath, paths } = require('../helper')
 const { sercver: serverOptimization } = require('./optimizations')
-const { PROD } = require('../constants')
+const { PROD, IGNORE_MODERN_BUILD } = require('../constants')
 const config = {
   mode: PROD ? 'production' : 'development',
   devtool: PROD ? false : 'eval-source-map',
@@ -37,7 +37,8 @@ const config = {
       __CLIENT__: false,
       __DEV__: !PROD,
       __BROWSER__: false,
-      __PROD__: PROD
+      __PROD__: PROD,
+      __IGNORE_MODERN_BUILD__: IGNORE_MODERN_BUILD
     }),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
