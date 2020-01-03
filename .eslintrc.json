@@ -29,7 +29,8 @@
     "DEVSERVER_HOST": false,
     "WEBPACK_PORT": false,
     "PORT": false,
-    "__INITIAL_STATE__": false
+    "__INITIAL_STATE__": false,
+    "__THEME__": false
   },
   "rules": {
     "curly": ["error", "all"],

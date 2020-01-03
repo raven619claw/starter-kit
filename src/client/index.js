@@ -7,21 +7,27 @@ import { CacheProvider } from '@emotion/core'
 import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
 import createStore from 'shared/store'
-
+import { ThemeProvider } from 'emotion-theming'
 if (module.hot) {
   module.hot.accept()
 }
+
+const theme = __THEME__
 const initialState = __INITIAL_STATE__
 const store = createStore(initialState)
 const appRender = () => {
   hydrate(
-    <Provider store={store}>
-      <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
-        <Router>
-          <App />
-        </Router>
-      </CacheProvider>
-    </Provider>,
+    <ThemeProvider theme={theme}>
+      <Provider store={store}>
+        <CacheProvider
+          value={getEmotionCache(store.getState().deviceEnv.isRTL)}
+        >
+          <Router>
+            <App />
+          </Router>
+        </CacheProvider>
+      </Provider>
+    </ThemeProvider>,
     document.getElementById('root')
   )
 }

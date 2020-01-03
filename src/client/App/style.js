@@ -1,5 +1,8 @@
 import { css } from '@emotion/core'
 
-export const style = css`
-  margin-left: 5px;
-`
+export const styleContainer = ({ primaryColor }) => ({
+  style: css`
+    margin-left: 5px;
+    color: ${primaryColor};
+  `
+})

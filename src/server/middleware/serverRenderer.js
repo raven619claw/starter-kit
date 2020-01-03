@@ -14,7 +14,8 @@ import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
 import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
-
+import { ThemeProvider } from 'emotion-theming'
+import { getTheme } from 'server/utils/theme'
 const { paths } = require('config/helper')
 
 // eslint-disable-next-line no-undef
@@ -29,11 +30,12 @@ const statsModern = __non_webpack_require__(
 const extractorLegacy = new ChunkExtractor({ stats: statsLegacy })
 const extractorModern = new ChunkExtractor({ stats: statsModern })
 const serverRenderer = async (req, res) => {
-  // add logic to handle this
+  const theme = getTheme({ req })
   const initialState = setInitialState({ req, res })
   const {
     deviceEnv: { isRTL, deviceType, deviceSupportsES6 }
   } = initialState
+  // add logic to handle this
   const extractor = (deviceSupportsES6 && extractorModern) || extractorLegacy
   setServerPreloadHeaderForScripts({ extractor, res, isRTL, deviceSupportsES6 })
   res.write('<!DOCTYPE html>')
@@ -52,13 +54,15 @@ const serverRenderer = async (req, res) => {
     const store = createStore(initialState)
     const content = renderToString(
       extractor.collectChunks(
-        <Provider store={store}>
-          <CacheProvider value={getEmotionCache(isRTL)}>
-            <StaticRouter location={req.url} context={context}>
-              <App deviceType={deviceType} />
-            </StaticRouter>
-          </CacheProvider>
-        </Provider>
+        <ThemeProvider theme={theme}>
+          <Provider store={store}>
+            <CacheProvider value={getEmotionCache(isRTL)}>
+              <StaticRouter location={req.url} context={context}>
+                <App deviceType={deviceType} />
+              </StaticRouter>
+            </CacheProvider>
+          </Provider>
+        </ThemeProvider>
       )
     )
     // TODO: currently modern extractor does not give script tags
@@ -82,7 +86,7 @@ const serverRenderer = async (req, res) => {
         isRTL,
         res,
         content,
-        deviceType
+        theme
       })
     )
   } catch (err) {

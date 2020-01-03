@@ -16,11 +16,12 @@ import {
 } from 'shared/constants'
 import { connect } from 'react-redux'
 import parser from 'ua-parser-js'
-import { style } from './style'
-
+import { withTheme } from 'emotion-theming'
+import { styleContainer } from './style'
 import './style.scss'
 
 // this is the entry file to the react app
+@withTheme
 @connect(
   ({ deviceEnv: { deviceType } }) => ({
     deviceType
@@ -61,7 +62,8 @@ class App extends Component {
   }
 
   render() {
-    const { deviceType } = this.props
+    const { deviceType, theme } = this.props
+    const { style } = styleContainer(theme)
     return (
       <div className="color-red" css={style}>
         <nav>

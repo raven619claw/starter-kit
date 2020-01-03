@@ -43,10 +43,11 @@ export const getHTMLHead = ({ styleTags, isRTL, linkTags }) => `
     })}
   </head>`
 
-const getHTMLScriptObjects = ({ isRTL, initialState }) => `
+const getHTMLScriptObjects = ({ isRTL, initialState, theme }) => `
   <script>
     document.dir = '${isRTL ? 'rtl' : 'ltr'}'
     var __INITIAL_STATE__ = ${JSON.stringify(initialState)}
+    var __THEME__ = ${JSON.stringify(theme)}
   </script>`
 
 const getHTMLPostBodyTags = ({ scriptTags }) => `${scriptTags.join('')}</html>`
@@ -59,16 +60,17 @@ const getHTMLBody = ({ content }) => `
 export const getHTML = ({
   res,
   content,
-  deviceType,
+
   scriptTags,
   linkTags,
   styleTags,
   isRTL,
-  initialState
+  initialState,
+  theme
 }) =>
   `${getHTMLHead({ res, styleTags, isRTL, linkTags })}
   ${getHTMLBody({ content })}
-  ${getHTMLScriptObjects({ deviceType, isRTL, initialState })}
+  ${getHTMLScriptObjects({ theme, isRTL, initialState })}
   ${getHTMLPostBodyTags({ res, scriptTags })}`
 
 export const getDeviceType = ua => {
