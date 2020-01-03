@@ -44,7 +44,12 @@
     "import/extensions": [
       "error",
       "never",
-      { "packages": "always", "svg": "always" }
+      {
+        "packages": "always",
+        "svg": "always",
+        "png": "always",
+        "jpeg": "always"
+      }
     ],
     "react/no-did-mount-set-state": "warn",
     "eqeqeq": "warn",

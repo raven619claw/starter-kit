@@ -114,22 +114,25 @@ const clientModernIgnoreLoader = {
   test: /\.(png|jpe?g|gif|svg|scss|css)$/,
   use: [{ loader: require.resolve('ignore-loader') }]
 }
-const urlLoaderClient = {
+// for some reason for greater size it does not default to file-loader
+// but just creates the path itself
+const urlLoaderClient = ({ PROD }) => ({
   test: /\.(png|jpe?g|gif|svg)$/,
   loader: require.resolve('url-loader'),
   options: {
-    limit: 20480, // this is not to generate assets for now. but should be set to a proper limit
-    name: '[name].[hash:8].[ext]'
+    limit: 10000, // this is not to generate assets for less than 10kb
+    name: `media/[name]${(PROD && '.[hash:8]') || ''}.[ext]`,
+    fallback: 'file-loader'
   }
-}
+})
 
-const urlLoaderServer = {
-  ...urlLoaderClient,
+const urlLoaderServer = ({ PROD }) => ({
+  ...urlLoaderClient({ PROD }),
   options: {
-    ...urlLoaderClient.options,
+    ...urlLoaderClient({ PROD }).options,
     emitFile: false
   }
-}
+})
 
 const fileLoaderClient = {
   exclude: [/\.(js|css|mjs|html|json)$/], // any assets which is not in the one mentioned.
@@ -137,7 +140,7 @@ const fileLoaderClient = {
     {
       loader: require.resolve('file-loader'),
       options: {
-        name: 'assets/[name].[hash:8].[ext]'
+        name: 'media/[name].[hash:8].[ext]'
       }
     }
   ]
@@ -149,7 +152,7 @@ const fileLoaderServer = {
     {
       loader: require.resolve('file-loader'),
       options: {
-        name: 'assets/[name].[hash:8].[ext]',
+        name: 'media/[name].[hash:8].[ext]',
         emitFile: false
       }
     }
@@ -161,7 +164,7 @@ const client = ({ PROD }) => [
     oneOf: [
       babelLoader({ PROD, type: LEGACY }),
       cssLoaderClient({ PROD }),
-      urlLoaderClient,
+      urlLoaderClient({ PROD }),
       fileLoaderClient
     ]
   }
@@ -171,7 +174,7 @@ const server = ({ PROD }) => [
     oneOf: [
       babelLoader({ PROD, type: SERVER }),
       cssLoaderServer,
-      urlLoaderServer,
+      urlLoaderServer({ PROD }),
       fileLoaderServer
     ]
   }
