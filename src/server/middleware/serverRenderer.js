@@ -51,14 +51,15 @@ const serverRenderer = async (req, res) => {
     .filter(item => item)
   try {
     const context = {}
-
-    await fetchComponentData(needs, {}) // maybe pass store here in future and other stuff
     const store = createStore(initialState)
+    await fetchComponentData({ needs, store }) // maybe pass store here in future and other stuf
     const content = renderToString(
       extractor.collectChunks(
         <ThemeProvider theme={theme}>
           <Provider store={store}>
-            <CacheProvider value={getEmotionCache(isRTL)}>
+            <CacheProvider
+              value={getEmotionCache(store.getState().deviceEnv.isRTL)}
+            >
               <StaticRouter location={req.url} context={context}>
                 <App deviceType={deviceType} />
               </StaticRouter>
@@ -84,7 +85,7 @@ const serverRenderer = async (req, res) => {
         scriptTags,
         linkTags,
         styleTags,
-        initialState,
+        initialState: store.getState(),
         isRTL,
         res,
         content,

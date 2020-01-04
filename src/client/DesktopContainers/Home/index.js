@@ -12,7 +12,7 @@ class Home extends Component {
     const { count } = this.props
     return (
       <div>
-        Home Desktop : <span>{count}</span>
+        Home Desktop : <span>{count.toString()}</span>
         <Alert svgcss={style} css={{ background: 'red' }} />
         <Test svgcss={style} />
       </div>
@@ -20,10 +20,7 @@ class Home extends Component {
   }
 }
 
-Home.needs = () =>
-  new Promise(resolve => {
-    resolve(1)
-  })
+Home.needs = ({ store: { dispatch } }) => dispatch.count.incrementAsync(5)
 
 const mapStateToProps = state => ({
   count: state.count
