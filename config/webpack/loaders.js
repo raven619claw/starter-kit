@@ -49,6 +49,15 @@ const babelLoader = ({ type = LEGACY, PROD }) => {
   if (type === LEGACY) {
     plugins.push('@babel/plugin-transform-runtime')
   }
+  if (PROD) {
+    plugins.push([
+      'transform-react-remove-prop-types',
+      {
+        mode: 'remove',
+        removeImport: true
+      }
+    ])
+  }
   return {
     test: /\.(js|jsx|mjs)$/,
     exclude: /node_modules/,

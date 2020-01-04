@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from 'react'
 import atob from 'shared/utils/atob'
+import axios from 'axios'
+import PropTypes from 'prop-types'
 import { style } from './style'
 
-export default props => {
-  const { src, lazyLoad, ...propsToAppendToElement } = props
+// cache this in service worker or something
+const imageCache = {}
+const SVGLoader = props => {
+  const { src, lazyLoad, svgcss, className, ...propsToAppendToElement } = props
   const [externalSvg, setExternalSvg] = useState(null)
   let isExternalLink = false
   if (src.substr(0, 4) !== 'data') {
@@ -11,10 +15,14 @@ export default props => {
   }
   useEffect(() => {
     const loadSvgIcon = async () => {
-      // TODO: replace fetch with axios or something
-      const blob = await fetch(src)
-      const svgElement = await blob.text()
-      setExternalSvg(svgElement)
+      if (imageCache[src]) {
+        setExternalSvg(imageCache[src])
+      } else {
+        // cannot use data directly using axios.get(src).data due to await
+        const { data } = await axios.get(src)
+        imageCache[src] = data
+        setExternalSvg(imageCache[src])
+      }
     }
     isExternalLink && loadSvgIcon()
   }, [])
@@ -40,14 +48,10 @@ export default props => {
   // dont pass everyprop here only the onclick otherwise they will show up in DOM
   // spread the prop just to include the onClick
   // use propsToAppendToEl to delete any prop you dont want showing in DOM
-  // initially the icon will set height width according to its own svg
-  // to override and set it to the container then pass matchContainer prop
-  // use matchContainer to set both height and width
-  // to match only one use heightAuto, widthAuto, matchWidth, matchHeight
-
   return (
     <div
-      css={style}
+      className={className}
+      css={[style, svgcss]}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...propsToAppendToElement}
       // eslint-disable-next-line react/no-danger
@@ -55,3 +59,12 @@ export default props => {
     />
   )
 }
+
+SVGLoader.propTypes = {
+  src: PropTypes.string.isRequired,
+  lazyLoad: PropTypes.bool,
+  className: PropTypes.string,
+  svgcss: PropTypes.object
+}
+
+export default SVGLoader
