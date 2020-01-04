@@ -67,4 +67,10 @@ SVGLoader.propTypes = {
   svgcss: PropTypes.object
 }
 
+SVGLoader.defaultProps = {
+  lazyLoad: false,
+  className: '',
+  svgcss: {}
+}
+
 export default SVGLoader
