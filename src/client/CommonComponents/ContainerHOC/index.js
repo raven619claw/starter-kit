@@ -27,6 +27,8 @@ export default WrappedComponent => {
   }
 
   class ContainerHOC extends Component {
+    isMounted = false
+
     constructor(props) {
       super(props)
       // initially set to true for SSR
@@ -47,9 +49,11 @@ export default WrappedComponent => {
           location: props.location,
           needItems: WrappedComponent.needs
         })
-        this.setState({ loaded: true, isError: false, err: null })
+
+        this.isMounted &&
+          this.setState({ loaded: true, isError: false, err: null })
       } catch (err) {
-        this.setState({ loaded: true, isError: true, err })
+        this.isMounted && this.setState({ loaded: true, isError: true, err })
       }
     }
 
@@ -67,6 +71,7 @@ export default WrappedComponent => {
     }
 
     componentDidMount() {
+      this.isMounted = true
       const { props } = this
       this.loadData({ props })
     }
@@ -84,6 +89,7 @@ export default WrappedComponent => {
     // DEV: this is kinda experimental and not verified.
     // do not use
     componentWillUnmount() {
+      this.isMounted = false
       // const { props } = this
       // this.deleteData({ props })
     }
@@ -92,6 +98,7 @@ export default WrappedComponent => {
       // can implement a global loader here
       // for example is waitForApi is present then show loader till promise is resolved then
       // render the WrappedComponent
+      // but the same can be handled through suspense
       const { props } = this
       const { loaded, isError, err } = this.state
       return (
