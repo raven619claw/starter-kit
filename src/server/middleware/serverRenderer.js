@@ -43,12 +43,23 @@ const serverRenderer = async (req, res) => {
   res.write('<!DOCTYPE html>')
   const needs = []
   const routes = Routes(deviceType)
-  routes
-    .map(route => {
-      const match = matchPath(req.path, route)
-      return match && route.component.needs && needs.push(route.component.needs)
-    })
-    .filter(item => item)
+  // this is a fix for now
+  // this is find a way to do this in sync
+  const routeComponents = await Promise.all(
+    routes
+      .map(route => {
+        const match = matchPath(req.path, route)
+        if (!match) {
+          return
+        }
+        // eslint-disable-next-line consistent-return
+        return route.component.load()
+      })
+      .filter(item => item)
+  )
+  routeComponents.map(
+    ({ default: route }) => route.needs && needs.push(route.needs)
+  )
   try {
     const context = {}
     const store = createStore(initialState)
