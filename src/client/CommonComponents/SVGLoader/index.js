@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
-
 import atob from 'shared/utils/atob'
+import { style } from './style'
 
 export default props => {
   const { src, lazyLoad, ...propsToAppendToElement } = props
@@ -46,7 +46,8 @@ export default props => {
   // to match only one use heightAuto, widthAuto, matchWidth, matchHeight
 
   return (
-    <span
+    <div
+      css={style}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...propsToAppendToElement}
       // eslint-disable-next-line react/no-danger
