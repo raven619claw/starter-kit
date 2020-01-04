@@ -31,6 +31,7 @@ const extractorLegacy = new ChunkExtractor({ stats: statsLegacy })
 const extractorModern =
   !__IGNORE_MODERN_BUILD__ && new ChunkExtractor({ stats: statsModern })
 const serverRenderer = async (req, res) => {
+  // set theme based on cookies or session or something
   const theme = getTheme({ req })
   const initialState = setInitialState({ req, res, theme })
   const {
