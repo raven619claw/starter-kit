@@ -1,8 +1,9 @@
 import { getDeviceType } from 'server/utils/renderHelpers'
-export default ({ req }) => {
+export default ({ req, theme }) => {
   const { isRTL = false, userAgent } = req.clientEnv
   const deviceType = getDeviceType(userAgent)
   return {
+    theme,
     count: 1,
     deviceEnv: {
       isRTL,

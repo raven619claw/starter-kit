@@ -17,10 +17,12 @@ import {
 import { connect } from 'react-redux'
 import parser from 'ua-parser-js'
 import { withTheme } from 'emotion-theming'
+import Theme from 'client/CommonComponents/Theme'
 import { styleContainer } from './style'
 import './style.scss'
 
 // this is the entry file to the react app
+
 @withTheme
 @connect(
   ({ deviceEnv: { deviceType } }) => ({
@@ -82,4 +84,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default Theme(App)

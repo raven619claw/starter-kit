@@ -14,7 +14,6 @@ import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
 import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
-import { ThemeProvider } from 'emotion-theming'
 import { getTheme } from 'server/utils/theme'
 const { paths } = require('config/helper')
 
@@ -33,7 +32,7 @@ const extractorModern =
   !__IGNORE_MODERN_BUILD__ && new ChunkExtractor({ stats: statsModern })
 const serverRenderer = async (req, res) => {
   const theme = getTheme({ req })
-  const initialState = setInitialState({ req, res })
+  const initialState = setInitialState({ req, res, theme })
   const {
     deviceEnv: { isRTL, deviceType, deviceSupportsES6 }
   } = initialState
@@ -55,17 +54,15 @@ const serverRenderer = async (req, res) => {
     await fetchComponentData({ needs, store }) // maybe pass store here in future and other stuf
     const content = renderToString(
       extractor.collectChunks(
-        <ThemeProvider theme={theme}>
-          <Provider store={store}>
-            <CacheProvider
-              value={getEmotionCache(store.getState().deviceEnv.isRTL)}
-            >
-              <StaticRouter location={req.url} context={context}>
-                <App deviceType={deviceType} />
-              </StaticRouter>
-            </CacheProvider>
-          </Provider>
-        </ThemeProvider>
+        <Provider store={store}>
+          <CacheProvider
+            value={getEmotionCache(store.getState().deviceEnv.isRTL)}
+          >
+            <StaticRouter location={req.url} context={context}>
+              <App />
+            </StaticRouter>
+          </CacheProvider>
+        </Provider>
       )
     )
     // TODO: currently modern extractor does not give script tags
@@ -88,8 +85,7 @@ const serverRenderer = async (req, res) => {
         initialState: store.getState(),
         isRTL,
         res,
-        content,
-        theme
+        content
       })
     )
   } catch (err) {
