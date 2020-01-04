@@ -53,10 +53,8 @@ const modernConfig = {
   },
   output: {
     ...config.output,
-    // renamed to js as loadable does not supp mjs chunks
-    // TODO: verify if extension change causes issue or not
-    chunkFilename: !PROD ? '[name].js' : '[name].[contenthash].js',
-    filename: !PROD ? '[name].js' : '[name].[contenthash].js'
+    chunkFilename: !PROD ? '[name].mjs' : '[name].[contenthash].mjs',
+    filename: !PROD ? '[name].mjs' : '[name].[contenthash].mjs'
   },
   optimization: {
     ...config.optimization,
