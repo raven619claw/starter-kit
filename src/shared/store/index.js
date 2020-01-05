@@ -1,22 +1,53 @@
 import { init } from '@rematch/core'
+
+import { connectRouter, routerMiddleware } from 'connected-react-router'
+import { createBrowserHistory, createMemoryHistory } from 'history'
 import { deviceEnvModel, countModel, themeModel } from './models'
+
+const createEnvHistory = url => {
+  if (__SERVER__) {
+    return createMemoryHistory({
+      initialEntries: [url]
+    })
+  }
+  if (__BROWSER__) {
+    return createBrowserHistory()
+  }
+}
 
 let store = null
 let storeCreated = false
-
-const createStore = ({ deviceEnv, count = 0, theme }) => {
+let history = null
+let historyCreated = false
+const createStore = ({ deviceEnv, count = 0, theme, url }) => {
+  history = createEnvHistory(url)
+  const reducers = { router: connectRouter(history) }
   store = init({
     models: {
       deviceEnv: deviceEnvModel(deviceEnv),
       count: countModel(count),
       theme: themeModel(theme)
+    },
+    redux: {
+      reducers,
+      middlewares: [routerMiddleware(history)],
+      devtoolOptions: {}
     }
   })
   storeCreated = true
+  historyCreated = true
   return store
 }
 
 export default createStore
+
+export const getHistory = () => {
+  if (historyCreated) {
+    return history
+  }
+  // TODO: add check and node logs here
+  console.error('HISTORY NOT CREATED YET')
+}
 
 export const getStore = () => {
   if (storeCreated) {
