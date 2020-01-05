@@ -1,3 +1,4 @@
+import { hot } from 'react-hot-loader/root'
 import React, { Component } from 'react'
 import Router from 'client/Router'
 import { Link } from 'react-router-dom'
@@ -87,4 +88,4 @@ class App extends Component {
   }
 }
 
-export default Theme(App)
+export default Theme(hot(App))

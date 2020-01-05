@@ -12,7 +12,8 @@ const resolvers = {
     server: getFullPath('src/server'),
     shared: getFullPath('src/shared'),
     assets: getFullPath('src/assets'),
-    config: getFullPath('config')
+    config: getFullPath('config'),
+    'react-dom': '@hot-loader/react-dom'
   }
 }
 module.exports = {

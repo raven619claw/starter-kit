@@ -1,3 +1,4 @@
+import 'react-hot-loader'
 import React from 'react'
 import { loadableReady } from '@loadable/component'
 import { hydrate } from 'react-dom'
