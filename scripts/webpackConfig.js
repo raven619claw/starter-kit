@@ -78,7 +78,7 @@ const build = async () => {
         return
       }
       if (error) {
-        logMessage(error, 'error')
+        logMessage(error.stack, 'error')
       }
 
       if (stats.hasErrors()) {
@@ -106,7 +106,7 @@ const build = async () => {
       process.exit()
     }
   } catch (error) {
-    logMessage(error, 'error')
+    logMessage(error.stack, 'error')
     process.exit()
   }
 }

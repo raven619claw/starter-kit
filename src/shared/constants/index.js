@@ -11,3 +11,4 @@ export const DESKTOP = 'desktop'
 // Route Names
 export const HOME = 'home'
 export const LIST = 'list'
+export const ERROR404 = 'error404'

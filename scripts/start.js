@@ -39,7 +39,7 @@ const start = async () => {
   try {
     await build()
   } catch (error) {
-    logMessage(error, 'error')
+    logMessage(error.stack, 'error')
   } finally {
     const script = nodemon(
       `${INSPECT ? '--inspect' : ''} ${paths.serverBuild}/server.js`

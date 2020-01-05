@@ -15,7 +15,7 @@ import { Provider } from 'react-redux'
 import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
 import { getTheme } from 'server/utils/theme'
-const { paths } = require('config/helper')
+const { paths, logMessage } = require('config/helper')
 
 // eslint-disable-next-line no-undef
 const statsLegacy = __non_webpack_require__(
@@ -77,18 +77,16 @@ const serverRenderer = async (req, res) => {
         </Provider>
       )
     )
-    // TODO: currently modern extractor does not give script tags
+    // TODO: currently modern extractor does not give mjs script tags
     // so that breaks
     const scriptTags = extractor.getScriptTags().split('\n')
     const linkTags = extractor.getLinkTags().split('\n')
     const styleTags = extractor.getStyleTags().split('\n')
 
-    if (context.url) {
-      res.writeHead(301, {
-        Location: context.url
-      })
-      res.end()
-    }
+    // TODO: figure out correct redirect handling
+    // if (context.url) {
+    //   return res.redirect(301, context.url)
+    // }
     res.end(
       getHTML({
         scriptTags,
@@ -101,8 +99,9 @@ const serverRenderer = async (req, res) => {
       })
     )
   } catch (err) {
-    // send err page here
-    res.end(err)
+    logMessage(err.stack, 'error')
+    // send 500 err page here
+    res.end(err.stack)
   }
 }
 

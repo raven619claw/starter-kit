@@ -76,6 +76,9 @@ class App extends Component {
             <li>
               <Link to={routePaths[LIST]}>{LIST}</Link>
             </li>
+            <li>
+              <Link to="random_link">404 Page</Link>
+            </li>
           </ul>
         </nav>
         <Router deviceType={deviceType} />

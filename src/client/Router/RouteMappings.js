@@ -8,21 +8,28 @@ import {
   LoadableListMobileContainer
 } from 'client/Router/MobileRouteComponents'
 
-import { HOME, LIST } from 'shared/constants'
+import { LoadableError404Container } from 'client/Router/CommonRouteComponents'
+import { HOME, LIST, ERROR404 } from 'shared/constants'
 
 export const routeNames = {
   LIST,
-  HOME
+  HOME,
+  ERROR404
 }
 export const routeMapping = () => ({
-  home: {
+  [HOME]: {
     desktop: LoadableHomeContainer, // add logic here to render something else based on logics
     mobile: LoadableHomeMobileContainer,
     tablet: LoadableHomeMobileContainer
   },
-  list: {
+  [LIST]: {
     desktop: LoadableListContainer,
     mobile: LoadableListMobileContainer,
     tablet: LoadableListMobileContainer
+  },
+  [ERROR404]: {
+    desktop: LoadableError404Container,
+    mobile: LoadableError404Container,
+    tablet: LoadableError404Container
   }
 })

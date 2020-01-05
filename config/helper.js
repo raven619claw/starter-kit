@@ -41,7 +41,7 @@ const logMessage = (message, level = 'info') => {
       ? 'blue'
       : 'white'
   // eslint-disable-next-line no-console
-  console.log(`[${new Date().toISOString()}]`, chalk[color](message))
+  console.log(`[${new Date().toISOString()}]`, chalk[color](message.toString()))
 }
 
 const compilerPromise = (name, compiler) =>
