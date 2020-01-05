@@ -49,7 +49,10 @@ const getHTMLScriptObjects = ({ isRTL, initialState }) => `
     var __INITIAL_STATE__ = ${JSON.stringify(initialState)}
   </script>`
 
-const getHTMLPostBodyTags = ({ scriptTags }) => `${scriptTags.join('')}</html>`
+const getHTMLPostBodyTags = ({ scriptTags }) => `${scriptTags.join('')}
+<!-- Prompt a message in the browser if users disabled JS -->
+<noscript>Your browser does not support JavaScript!</noscript>
+</html>`
 
 const getHTMLBody = ({ content }) => `
     <body>

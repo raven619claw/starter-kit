@@ -11,6 +11,18 @@ if (module.hot) {
   module.hot.accept()
 }
 
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker
+      .register('/assets/service-worker.js')
+      .then(registration => {
+        console.log('SW registered: ', registration)
+      })
+      .catch(registrationError => {
+        console.log('SW registration failed: ', registrationError)
+      })
+  })
+}
 const initialState = __INITIAL_STATE__
 const store = createStore(initialState)
 const appRender = () => {
