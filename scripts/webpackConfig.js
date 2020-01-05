@@ -43,7 +43,12 @@ if (PROD) {
     .join('/')
     .replace(/([^:+])\/+/g, '$1/')
 }
-const multiCompiler = webpack([clientConfig, serverConfig, clientModernConfig])
+
+const compilers = [clientConfig, serverConfig]
+if (!IGNORE_MODERN_BUILD) {
+  compilers.push(clientModernConfig)
+}
+const multiCompiler = webpack(compilers)
 
 const clientCompiler = multiCompiler.compilers.find(
   compiler => compiler.name === 'client'
