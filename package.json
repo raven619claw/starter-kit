@@ -83,6 +83,7 @@
     "webpack-rtl-plugin": "^2.0.0",
     "webpack-shell-plugin": "^0.5.0",
     "webpack-visualizer-plugin": "^0.1.11",
+    "webpackbar": "^4.0.0",
     "workbox-webpack-plugin": "^4.3.1",
     "write-file-webpack-plugin": "^4.5.0"
   },

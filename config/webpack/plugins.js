@@ -5,11 +5,13 @@ const WebpackRTLPlugin = require('webpack-rtl-plugin')
 const LoadablePlugin = require('@loadable/webpack-plugin')
 const WriteFilePlugin = require('write-file-webpack-plugin')
 const Visualizer = require('webpack-visualizer-plugin')
+const WebpackBar = require('webpackbar')
 const AssetsPlugin = require('assets-webpack-plugin')
 const OptimizeCssAssetsPlugin = require('optimize-css-assets-webpack-plugin')
 const serviceWorker = require('./ServiceWorkerPlugin')
 const { LEGACY, PROD, IGNORE_MODERN_BUILD } = require('../constants')
 const { processManifestOutput } = require('../helper')
+const { webpackBarClient } = require('./stats')
 const assetsPluginInstance = new AssetsPlugin({
   processOutput(assets) {
     return processManifestOutput(assets)
@@ -19,6 +21,7 @@ const assetsPluginInstance = new AssetsPlugin({
   prettyPrint: true
 })
 const clientPlugins = ({ type }) => [
+  new WebpackBar(webpackBarClient(type)),
   new WriteFilePlugin(),
   assetsPluginInstance,
   // given these are globals which would be directly accessible in webpack and node

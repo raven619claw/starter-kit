@@ -7,7 +7,7 @@ const { resolvers } = require('./resolvers')
 const { client: clientOptimization } = require('./optimizations')
 const { clientPlugins } = require('./plugins')
 const { getFullPath, paths } = require('../helper')
-const stats = require('./stats')
+const { statsMinimal: stats } = require('./stats')
 const { LEGACY, PROD, MODERN } = require('../constants')
 
 const getPlugin = ({ type }) => {

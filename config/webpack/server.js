@@ -1,9 +1,11 @@
 const webpack = require('webpack')
+const WebpackBar = require('webpackbar')
 const { server: serverLoaders } = require('./loaders')
 const { resolvers } = require('./resolvers')
 const { getFullPath, paths } = require('../helper')
 const { sercver: serverOptimization } = require('./optimizations')
 const { PROD, IGNORE_MODERN_BUILD } = require('../constants')
+const { statsMinimal: stats, webpackBarServer } = require('./stats')
 const config = {
   mode: PROD ? 'production' : 'development',
   devtool: PROD ? false : 'eval-source-map',
@@ -24,12 +26,9 @@ const config = {
   module: {
     rules: serverLoaders({ PROD })
   },
-  stats: {
-    colors: true,
-    warningsFilter: warning =>
-      warning.indexOf('Conflicting order between:') === -1
-  },
+  stats,
   plugins: [
+    new WebpackBar(webpackBarServer),
     // given these are globals which would be directly accessible in webpack and node
     // adding __ to var name to denote the same
     new webpack.DefinePlugin({
