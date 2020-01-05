@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { withTheme } from 'emotion-theming'
-import ConnectWithHOC from 'client/CommonComponents/ConnectWithHOC'
+import { connect } from 'react-redux'
+import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
+const mapStateToProps = state => ({
+  count: state.count
+})
 @withTheme
+@connect(mapStateToProps)
+@ContainerHOC
 class Home extends Component {
-  // can also be written as
-  // Home.needs = ({ store: { dispatch } }) => dispatch.count.incrementAsync(5)
   static needs({ store: { dispatch } }) {
     return dispatch.count.incrementAsync(5)
   }
@@ -20,7 +24,4 @@ class Home extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-  count: state.count
-})
-export default ConnectWithHOC(mapStateToProps)(Home)
+export default Home
