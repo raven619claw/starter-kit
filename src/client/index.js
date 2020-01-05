@@ -7,8 +7,32 @@ import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import createStore, { getHistory } from 'shared/store'
+
+const initialState = __INITIAL_STATE__
+const store = createStore(initialState)
+const appHistory = getHistory()
+
+const appRender = AppComponent => {
+  hydrate(
+    <Provider store={store}>
+      <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
+        <ConnectedRouter history={appHistory}>
+          <AppComponent />
+        </ConnectedRouter>
+      </CacheProvider>
+    </Provider>,
+    document.getElementById('root')
+  )
+}
+
 if (module.hot) {
-  module.hot.accept()
+  module.hot.accept('client/App', () => {
+    // Require the new version and render it instead
+    // eslint-disable-next-line global-require
+    import('client/App').then(({ default: NextApp }) => {
+      appRender(NextApp)
+    })
+  })
 }
 
 if ('serviceWorker' in navigator) {
@@ -23,21 +47,7 @@ if ('serviceWorker' in navigator) {
       })
   })
 }
-const initialState = __INITIAL_STATE__
-const store = createStore(initialState)
-const appRender = () => {
-  hydrate(
-    <Provider store={store}>
-      <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
-        <ConnectedRouter history={getHistory()}>
-          <App />
-        </ConnectedRouter>
-      </CacheProvider>
-    </Provider>,
-    document.getElementById('root')
-  )
-}
 
 loadableReady(() => {
-  appRender()
+  appRender(App)
 })
