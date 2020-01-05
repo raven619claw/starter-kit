@@ -4,6 +4,12 @@ import ConnectWithHOC from 'client/CommonComponents/ConnectWithHOC'
 
 @withTheme
 class Home extends Component {
+  // can also be written as
+  // Home.needs = ({ store: { dispatch } }) => dispatch.count.incrementAsync(5)
+  static needs({ store: { dispatch } }) {
+    return dispatch.count.incrementAsync(5)
+  }
+
   render() {
     const { count } = this.props
     return (
@@ -13,8 +19,6 @@ class Home extends Component {
     )
   }
 }
-
-Home.needs = ({ store: { dispatch } }) => dispatch.count.incrementAsync(5)
 
 const mapStateToProps = state => ({
   count: state.count
