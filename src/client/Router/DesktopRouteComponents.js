@@ -1,7 +1,5 @@
-import React from 'react'
 import loadable from '@loadable/component'
-
-const RouteComponentLoader = <div>loading...</div>
+import RouteComponentLoader from 'client/CommonComponents/RouteComponentLoader'
 
 export const LoadableListContainer = loadable(
   () => import('client/DesktopContainers/List'),
