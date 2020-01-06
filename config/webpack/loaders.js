@@ -44,7 +44,8 @@ const babelLoader = ({ type = LEGACY, PROD }) => {
     '@babel/plugin-syntax-dynamic-import',
     '@babel/plugin-proposal-class-properties',
     '@loadable/babel-plugin',
-    'react-hot-loader/babel'
+    'react-hot-loader/babel',
+    '@babel/plugin-proposal-export-default-from'
   ]
   // for some reason @babel/plugin-transform-runtime does not start the server so just added this check
   if (type === LEGACY) {
