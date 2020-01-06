@@ -11,13 +11,13 @@ import createStore, { getHistory } from 'shared/store'
 
 const initialState = __INITIAL_STATE__
 const store = createStore(initialState)
-const appHistory = getHistory()
+const history = getHistory()
 
 const appRender = AppComponent => {
   hydrate(
     <Provider store={store}>
       <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
-        <ConnectedRouter history={appHistory}>
+        <ConnectedRouter history={history}>
           <AppComponent />
         </ConnectedRouter>
       </CacheProvider>
