@@ -63,7 +63,7 @@ const serverCompiler = multiCompiler.compilers.find(
 const build = async () => {
   ;[
     serverCompiler,
-    (!IGNORE_MODERN_BUILD && clientModernCompiler) || undefined,
+    clientModernCompiler,
     // TODO:check if this is needed as the watch is handled by devserver
     clientCompiler
   ].map(compiler => {
@@ -101,9 +101,7 @@ const build = async () => {
     await Promise.all([
       compilerPromise('client', clientCompiler),
       compilerPromise('server', serverCompiler),
-      (!IGNORE_MODERN_BUILD &&
-        compilerPromise('clientModern', clientModernCompiler)) ||
-        null
+      compilerPromise('clientModern', clientModernCompiler)
     ])
 
     logMessage('Done!', 'info')

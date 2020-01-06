@@ -44,8 +44,11 @@ const logMessage = (message, level = 'info') => {
   console.log(`[${new Date().toISOString()}]`, chalk[color](message.toString()))
 }
 
-const compilerPromise = (name, compiler) =>
-  new Promise((resolve, reject) => {
+const compilerPromise = (name, compiler) => {
+  if (!compiler) {
+    return null
+  }
+  return new Promise((resolve, reject) => {
     compiler.hooks.compile.tap(name, () => {
       logMessage(`[${name}] Compiling `)
     })
@@ -65,6 +68,7 @@ const compilerPromise = (name, compiler) =>
       return reject(`Failed to compile ${name}`)
     })
   })
+}
 
 module.exports = {
   getFullPath,
