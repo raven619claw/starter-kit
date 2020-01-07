@@ -15,7 +15,7 @@ import { Provider } from 'react-redux'
 import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
 import { getTheme } from 'server/utils/theme'
-import { getProxyHeaders } from 'server/utils/generateHeaders'
+import getProxyHeaders from 'server/utils/generateHeaders'
 const { paths, logMessage } = require('config/helper')
 
 // eslint-disable-next-line no-undef
