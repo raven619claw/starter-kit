@@ -16,8 +16,11 @@ const Home = () => {
   const { increment } = useDispatch(mapDispatchToProps)
   const { count } = useSelector(mapStateToProps)
   useEffect(() => {
-    increment()
-  }, [increment])
+    increment(5)
+    // commented this as on HMR new ref is passed
+    // so increment fn changes so it is called again
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
   return (
     <div>
       Home Desktop :{' '}
