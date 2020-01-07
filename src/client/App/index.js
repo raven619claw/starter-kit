@@ -23,7 +23,7 @@ import { styleContainer } from './style'
 import './style.scss'
 
 // this is the entry file to the react app
-
+// keeping this as a class compoent for example purposes
 @withTheme
 @connect(
   ({ deviceEnv: { deviceType } }) => ({

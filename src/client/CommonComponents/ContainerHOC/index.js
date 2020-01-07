@@ -25,7 +25,7 @@ export default WrappedComponent => {
       )
     }
   }
-
+  // TODO: make this a functional component as use hooks
   class ContainerHOC extends Component {
     isMounted = false
 

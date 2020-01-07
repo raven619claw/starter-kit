@@ -1,8 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 
 // eslint-disable-next-line react/prefer-stateless-function
-export default class App extends Component {
-  render() {
-    return <div>List Mobile</div>
-  }
-}
+export default () => <div>List Mobile</div>

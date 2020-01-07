@@ -1,6 +1,6 @@
 {
   "extends": ["airbnb", "prettier", "prettier/react"],
-  "plugins": ["prettier", "react", "jsx-a11y"],
+  "plugins": ["prettier", "react", "jsx-a11y", "react-hooks"],
   "parser": "babel-eslint",
   "parserOptions": {
     "ecmaVersion": 6,
@@ -58,6 +58,8 @@
     "jsx-a11y/alt-text": "warn",
     "no-nested-ternary": "warn",
     "no-prototype-builtins": "warn",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
     "no-plusplus": "warn",
     "no-unused-expressions": [
       "error",

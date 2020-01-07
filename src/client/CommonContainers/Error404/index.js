@@ -1,8 +1,3 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-// eslint-disable-next-line react/prefer-stateless-function
-export default class Error404 extends Component {
-  render() {
-    return <div className="">404 page</div>
-  }
-}
+export default () => <div className="">404 page</div>
