@@ -15,6 +15,7 @@ import { Provider } from 'react-redux'
 import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
 import { getTheme } from 'server/utils/theme'
+import { getProxyHeaders } from 'server/utils/generateHeaders'
 const { paths, logMessage } = require('config/helper')
 
 // eslint-disable-next-line no-undef
@@ -62,8 +63,11 @@ const serverRenderer = async (req, res) => {
   )
   try {
     const context = {}
+    const proxyHeaders = getProxyHeaders({
+      cookie: req.headers.cookie
+    })
     const store = createStore(initialState)
-    await fetchComponentData({ needs, store }) // maybe pass store here in future and other stuf
+    await fetchComponentData({ needs, store, proxyHeaders }) // maybe pass store here in future and other stuf
     const content = renderToString(
       extractor.collectChunks(
         <Provider store={store}>

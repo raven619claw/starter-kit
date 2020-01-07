@@ -27,8 +27,8 @@ export const setServerPreloadHeaderForScripts = ({ extractor, res, isRTL }) => {
   })
 }
 
-export const fetchComponentData = ({ needs, store }) => {
-  const needsPromises = needs.map(need => need({ store }))
+export const fetchComponentData = ({ needs, store, proxyHeaders }) => {
+  const needsPromises = needs.map(need => need({ store, proxyHeaders }))
   return Promise.all(needsPromises)
 }
 // add react helmet here

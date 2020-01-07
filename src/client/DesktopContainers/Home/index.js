@@ -31,6 +31,12 @@ const Home = () => {
   )
 }
 
-Home.needs = ({ store: { dispatch } }) => dispatch.count.incrementAsync(5)
+Home.needs = ({ proxyHeaders, store: { dispatch } }) =>
+  dispatch.count.incrementAsync(
+    5 /* payload */,
+    {
+      proxyHeaders
+    } /* config object */
+  )
 
 export default ContainerHOC(Home)

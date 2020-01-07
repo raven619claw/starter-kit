@@ -82,7 +82,9 @@ export default WrappedComponent => {
         // can add conditions here based on use cases for same route changes
         nextProps.location.pathname !== this.props.location.pathname
       ) {
-        this.loadData({ props: nextProps, callPageLoadEndTimeMethod: false })
+        this.loadData({ props: nextProps })
+        // TODO:handle err state here if API fails
+        window.scrollTo(0, 0)
       }
     }
 
