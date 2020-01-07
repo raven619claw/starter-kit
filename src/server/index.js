@@ -25,7 +25,7 @@ setupCustomMiddlewares(app)
 
 app.listen(PORT, () => {
   // eslint-disable-next-line no-console
-  logMessage(`App is running: 🌎 http://localhost:${PORT || 8500}`)
+  logMessage(`App is running: 🚀  http://localhost:${PORT || 8500}`)
 })
 
 export default app
