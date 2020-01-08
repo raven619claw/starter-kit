@@ -12,3 +12,7 @@ The no bullshit starter kit for React
 8. Storybook
 
 TO RUN: `yarn start:dev:inspect`
+
+BUILD PROD: `yarn build:prod`
+
+RUN PROD: `yarn start:prod`
