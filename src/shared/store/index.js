@@ -31,7 +31,9 @@ const createStore = ({ deviceEnv, count = 0, theme, url }) => {
     redux: {
       reducers,
       middlewares: [routerMiddleware(history)],
-      devtoolOptions: {}
+      devtoolOptions: {
+        disabled: __PROD__
+      }
     }
   })
   storeCreated = true
