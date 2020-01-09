@@ -42,9 +42,9 @@ export default WrappedComponent => {
           setState({ loaded: true, isError: true, err: error })
         }
       }
-      ;(!isServerRendered || forceClientNeedsRefetch) && loadData()
+      ;(!isServerRendered || forceClientNeedsRefetch) && needs && loadData()
       isServerRendered = false
-      return () => deleteData()
+      return () => unMountNeeds && deleteData()
       // only call effect when location object changes
       // as that is the only time we want the data to auto change
     }, [location])
