@@ -15,10 +15,10 @@ export default WrappedComponent => {
       err: null
     })
     const location = useLocation()
-    // not used as of now
-    // need more handling
 
     useEffect(() => {
+      // not used as of now
+      // need more handling
       const deleteData = async () => {
         const store = getStore()
         await fulfillClientUnmountNeeds({
