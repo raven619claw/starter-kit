@@ -40,4 +40,7 @@ Home.needs = ({ proxyHeaders, store: { dispatch } }) =>
     } /* config object */
   )
 
+// could have added ContainerHOC automatically in routes
+// but given that we use props from it in the component
+// then it would be hard to correlate
 export default ContainerHOC(Home)
