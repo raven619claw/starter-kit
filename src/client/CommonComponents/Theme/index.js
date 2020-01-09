@@ -1,13 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react'
 import { ThemeProvider } from 'emotion-theming'
-import { connect } from 'react-redux'
+import { useSelector } from 'client/hooks/rematchHooks'
 
-export default Component =>
-  connect(({ theme }) => ({
-    theme
-  }))(({ theme, ...props }) => (
+const mapStateToProps = ({ theme }) => ({
+  theme
+})
+
+export default Component => props => {
+  const { theme } = useSelector(mapStateToProps)
+  return (
     <ThemeProvider theme={theme}>
       <Component {...props} />
     </ThemeProvider>
-  ))
+  )
+}
