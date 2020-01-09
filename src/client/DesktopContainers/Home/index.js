@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useTheme } from 'emotion-theming'
-import { useDispatch, useSelector } from 'client/utils/rematchHooks'
+import { useDispatch, useSelector } from 'client/hooks/rematchHooks'
 import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
 const mapDispatchToProps = dispatch => ({
