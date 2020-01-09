@@ -1,4 +1,6 @@
 import React from 'react'
+import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
-// eslint-disable-next-line react/prefer-stateless-function
-export default () => <div>Home Mobile</div>
+const HomeContainerMobile = () => <div className="class1">Home Mobile</div>
+
+export default ContainerHOC(HomeContainerMobile)

@@ -1,3 +1,6 @@
 import React from 'react'
+import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
-export default () => <div className="">404 page</div>
+const Error404Container = () => <div className="class1">404</div>
+
+export default ContainerHOC(Error404Container)

@@ -8,7 +8,11 @@
 // for a perfect reference see SavedHotels/Index container
 // because of this now you dont need to call APIs in componentDidMount of that route
 
-export const fulfillClientNeeds = ({ store, location, needItems = [] }) => {
+export const fulfillClientNeeds = ({
+  store,
+  location,
+  needs: needItems = []
+}) => {
   if (!__BROWSER__) {
     return new Promise(resolve => {
       resolve()

@@ -1,4 +1,7 @@
 import React from 'react'
 import './style.scss'
+import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 
-export default () => <div className="class1">List Desktop</div>
+const ListContainer = () => <div className="class1">List Desktop</div>
+
+export default ContainerHOC(ListContainer)
