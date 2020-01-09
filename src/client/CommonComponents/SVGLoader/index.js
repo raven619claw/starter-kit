@@ -18,14 +18,13 @@ const SVGLoader = props => {
       if (imageCache[src]) {
         setExternalSvg(imageCache[src])
       } else {
-        // cannot use data directly using axios.get(src).data due to await
-        const { data } = await axios.get(src)
+        const { data } = (await axios.get(src)).data
         imageCache[src] = data
         setExternalSvg(imageCache[src])
       }
     }
     isExternalLink && loadSvgIcon()
-  }, [])
+  }, [isExternalLink, src])
 
   if ((__SERVER__ && (lazyLoad || isExternalLink)) || !src || !src.match) {
     return null
