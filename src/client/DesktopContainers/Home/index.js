@@ -19,6 +19,7 @@ const Home = () => {
     increment(5)
     // commented this as on HMR new ref is passed
     // so increment fn changes so it is called again
+    // this could be an issue only for demo but never real use case
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
   return (

@@ -1,11 +1,12 @@
 import { hot } from 'react-hot-loader/root'
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
+import { useTheme } from 'emotion-theming'
+import { useDispatch, useSelector } from 'client/hooks/rematchHooks'
 import Router from 'client/Router'
 import { Link } from 'react-router-dom'
 // this might seem counter productive to need two imports to get route urls
 // but in long term would help organise and keep single source for route paths
 import { routePaths } from 'shared/urlConfig'
-import autobind from 'react-auto-bind'
 import {
   HOME,
   LIST,
@@ -15,33 +16,32 @@ import {
   MOBILE,
   DESKTOP
 } from 'shared/constants'
-import { connect } from 'react-redux'
 import parser from 'ua-parser-js'
-import { withTheme } from 'emotion-theming'
 import Theme from 'client/CommonComponents/Theme'
 import { styleContainer } from './style'
 import './style.scss'
 
 // this is the entry file to the react app
 // keeping this as a class compoent for example purposes
-@withTheme
-@connect(
-  ({ deviceEnv: { deviceType } }) => ({
-    deviceType
-  }),
-  ({ deviceEnv: { updateDeviceInfo } }) => ({
-    updateDeviceInfo
-  })
-)
-class App extends Component {
-  constructor(props) {
-    super(props)
-    autobind(this)
-  }
 
-  componentDidMount() {
+const mapDispatchToProps = ({ deviceEnv: { updateDeviceInfo } }) => ({
+  updateDeviceInfo
+})
+
+const mapStateToProps = ({ deviceEnv: { deviceType } }) => ({
+  deviceType
+})
+
+const App = () => {
+  const theme = useTheme()
+  const { updateDeviceInfo } = useDispatch(mapDispatchToProps)
+  const { deviceType } = useSelector(mapStateToProps)
+  // memo this
+  const { style } = styleContainer(theme)
+  // can move this to it's own hook but seems over engg.
+  // as this won't be used anywhere else
+  useEffect(() => {
     const resizeEvent = () => {
-      const { deviceType, updateDeviceInfo } = this.props
       const { innerWidth } = window
       let updatedDeviceType =
         parser(window.navigator.userAgent).device.type || DESKTOP
@@ -54,38 +54,33 @@ class App extends Component {
         }
       }
       if (updatedDeviceType !== deviceType) {
-        updateDeviceInfo({ deviceType: updatedDeviceType })
         // update store
+        updateDeviceInfo({ deviceType: updatedDeviceType })
       }
     }
-    window.removeEventListener('resize', resizeEvent)
     window.addEventListener('resize', resizeEvent, {
       passive: true
     })
-  }
-
-  render() {
-    const { deviceType, theme } = this.props
-    const { style } = styleContainer(theme)
-    return (
-      <div className="color-red" css={style}>
-        <nav>
-          <ul>
-            <li>
-              <Link to={routePaths[HOME]}>{HOME}</Link>
-            </li>
-            <li>
-              <Link to={routePaths[LIST]}>{LIST}</Link>
-            </li>
-            <li>
-              <Link to="random_link">404 Page</Link>
-            </li>
-          </ul>
-        </nav>
-        <Router deviceType={deviceType} />
-      </div>
-    )
-  }
+    return () => window.removeEventListener('resize', resizeEvent)
+  }, [deviceType, updateDeviceInfo])
+  return (
+    <div className="color-red" css={style}>
+      <nav>
+        <ul>
+          <li>
+            <Link to={routePaths[HOME]}>{HOME}</Link>
+          </li>
+          <li>
+            <Link to={routePaths[LIST]}>{LIST}</Link>
+          </li>
+          <li>
+            <Link to="random_link">404 Page</Link>
+          </li>
+        </ul>
+      </nav>
+      <Router deviceType={deviceType} />
+    </div>
+  )
 }
 
 export default Theme(hot(App))
