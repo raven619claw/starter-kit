@@ -1,6 +1,7 @@
 import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { StaticRouter, matchPath } from 'react-router-dom'
+import { IntlProvider } from 'react-intl'
 import { Routes } from 'client/Router'
 import App from 'client/App'
 import {
@@ -75,7 +76,9 @@ const serverRenderer = async (req, res) => {
             value={getEmotionCache(store.getState().deviceEnv.isRTL)}
           >
             <StaticRouter location={req.url} context={context}>
-              <App />
+              <IntlProvider locale="en" messages={{}}>
+                <App />
+              </IntlProvider>
             </StaticRouter>
           </CacheProvider>
         </Provider>

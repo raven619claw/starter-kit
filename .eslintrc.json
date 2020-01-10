@@ -51,6 +51,7 @@
         "jpeg": "always"
       }
     ],
+    "react/jsx-props-no-spreading": "off",
     "react/no-did-mount-set-state": "warn",
     "eqeqeq": "warn",
     "jsx-a11y/label-has-for": "warn",

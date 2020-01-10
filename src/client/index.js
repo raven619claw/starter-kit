@@ -7,8 +7,8 @@ import { CacheProvider } from '@emotion/core'
 import getEmotionCache from 'shared/getEmotionCache'
 import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
+import { IntlProvider } from 'react-intl'
 import createStore, { getHistory } from 'shared/store'
-
 const initialState = __INITIAL_STATE__
 const store = createStore(initialState)
 const history = getHistory()
@@ -18,7 +18,9 @@ const appRender = AppComponent => {
     <Provider store={store}>
       <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
         <ConnectedRouter history={history}>
-          <AppComponent />
+          <IntlProvider locale="en" messages={{}}>
+            <AppComponent />
+          </IntlProvider>
         </ConnectedRouter>
       </CacheProvider>
     </Provider>,

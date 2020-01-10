@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useTheme } from 'emotion-theming'
 import { useDispatch, useSelector } from 'client/hooks/rematchHooks'
 import ContainerHOC from 'client/CommonComponents/ContainerHOC'
+import { FormattedNumber, FormattedMessage } from 'react-intl'
+import messages from './messages'
 
 const mapDispatchToProps = dispatch => ({
   increment: dispatch.count.increment
@@ -28,6 +30,16 @@ const Home = () => {
       <span>
         {count.toString()},{JSON.stringify(theme)}
       </span>
+      <div>
+        <FormattedNumber value={123456789.12} />
+        <br />
+        <FormattedMessage
+          {...messages.gretting}
+          values={{
+            b: (...chunks) => <b>{chunks}</b>
+          }}
+        />
+      </div>
     </div>
   )
 }

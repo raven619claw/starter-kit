@@ -1,4 +1,7 @@
+// eslint-disable-next-line global-require
+global.DOMParser = new (require('jsdom').JSDOM)().window.DOMParser
 require('dotenv').config()
+require('full-icu')
 import path from 'path'
 import express from 'express'
 import cors from 'cors'
