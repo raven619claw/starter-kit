@@ -91,6 +91,8 @@
   "dependencies": {
     "@emotion/babel-preset-css-prop": "^10.0.23",
     "@emotion/core": "^10.0.22",
+    "@formatjs/intl-pluralrules": "^1.5.0",
+    "@formatjs/intl-relativetimeformat": "^4.5.7",
     "@hot-loader/react-dom": "^16.11.0",
     "@loadable/component": "^5.11.0",
     "@loadable/server": "^5.11.0",

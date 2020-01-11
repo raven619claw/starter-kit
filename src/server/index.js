@@ -10,6 +10,7 @@ import bodyParser from 'body-parser'
 import { PORT } from 'config/constants'
 import { paths, logMessage } from 'config/helper'
 import setupCustomMiddlewares from 'server/middleware'
+import setupServerIntl from 'server/service/setupServerIntl'
 
 const app = express()
 app.get('/favicon.ico', (req, res) => res.sendStatus(204))
@@ -25,10 +26,15 @@ app.use(
   })
 )
 setupCustomMiddlewares(app)
-
-app.listen(PORT, () => {
-  // eslint-disable-next-line no-console
-  logMessage(`App is running: 🚀  http://localhost:${PORT || 8500}`)
-})
-
-export default app
+const startAppListen = async () => {
+  // setup all intl stuff in this
+  // during build it will load the translations from the API and set in JSON
+  // and in the renderer use dynamic import to load the translations
+  // server loading for translations left to the developer
+  await setupServerIntl()
+  app.listen(PORT, () => {
+    // eslint-disable-next-line no-console
+    logMessage(`App is running: 🚀  http://localhost:${PORT || 8500}`)
+  })
+}
+startAppListen()

@@ -9,16 +9,17 @@ import { Provider } from 'react-redux'
 import { ConnectedRouter } from 'connected-react-router'
 import { IntlProvider } from 'react-intl'
 import createStore, { getHistory } from 'shared/store'
+import loadIntl from 'client/utils/setupClientIntl'
 const initialState = __INITIAL_STATE__
 const store = createStore(initialState)
 const history = getHistory()
 
-const appRender = AppComponent => {
+const appRender = ({ AppComponent, messages }) => {
   hydrate(
     <Provider store={store}>
       <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
         <ConnectedRouter history={history}>
-          <IntlProvider locale="en" messages={{}}>
+          <IntlProvider locale="en" messages={messages}>
             <AppComponent />
           </IntlProvider>
         </ConnectedRouter>
@@ -33,7 +34,7 @@ if (module.hot) {
     // Require the new version and render it instead
     // eslint-disable-next-line global-require
     import('client/App').then(({ default: NextApp }) => {
-      appRender(NextApp)
+      appRender({ AppComponent: NextApp })
     })
   })
 }
@@ -41,16 +42,13 @@ if (module.hot) {
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker
+      // returns a promise
       .register('/assets/service-worker.js')
-      .then(registration => {
-        console.log('SW registered: ', registration)
-      })
-      .catch(registrationError => {
-        console.log('SW registration failed: ', registrationError)
-      })
   })
 }
 
-loadableReady(() => {
-  appRender(App)
+loadableReady(async () => {
+  // add logic to load all localization data inside this
+  const messages = await loadIntl()
+  appRender({ AppComponent: App, messages })
 })
