@@ -51,7 +51,8 @@ if ('serviceWorker' in navigator) {
 }
 
 loadableReady(async () => {
+  const polyfillRequired = true
   // add logic to load all localization data inside this
-  const messages = await loadIntl({ locale, platform })
+  const messages = await loadIntl({ locale, platform, polyfillRequired })
   appRender({ AppComponent: App, messages })
 })
