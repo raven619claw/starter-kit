@@ -17,7 +17,7 @@ import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
 import { getTheme } from 'server/utils/theme'
 import getProxyHeaders from 'server/utils/generateHeaders'
-// TODO: remove this logger and use winston
+// TODO: remove this logger and use winston for async logging
 import { paths, logMessage } from 'config/helper'
 import messagesObject from 'server/utils/getTranslationsObject'
 // eslint-disable-next-line no-undef
