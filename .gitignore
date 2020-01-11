@@ -9,7 +9,7 @@ dev/
 .dist/
 .dev/
 react-loadable.json
-
+translations/
 #dump
 *dump.rdb
 npm-debug.log
