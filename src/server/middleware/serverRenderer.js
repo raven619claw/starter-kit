@@ -17,6 +17,8 @@ import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
 import { getTheme } from 'server/utils/theme'
 import getProxyHeaders from 'server/utils/generateHeaders'
+
+// TODO: remove this logger and use winston
 const { paths, logMessage } = require('config/helper')
 
 // eslint-disable-next-line no-undef
