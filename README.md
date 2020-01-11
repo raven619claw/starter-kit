@@ -10,6 +10,7 @@ THIS BRANCH IS SPECIFIC SETUP FOR INTL IN BELVILLA
 6. ESLINT
 7. Express
 8. Storybook
+9. React Intl(no extraction for msg setup. That is up to the developer)
 
 TO RUN: `yarn start:dev:inspect`
 

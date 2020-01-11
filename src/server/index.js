@@ -37,6 +37,7 @@ const startAppListen = async () => {
   // server loading for translations left to the developer
   await setupServerIntl()
   app.listen(PORT, () => {
+    // TODO: remove this logger and use winston
     // eslint-disable-next-line no-console
     logMessage(`App is running: 🚀  http://localhost:${PORT || 8500}`)
   })
