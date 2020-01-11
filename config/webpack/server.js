@@ -1,5 +1,6 @@
 const webpack = require('webpack')
 const WebpackBar = require('webpackbar')
+const CopyPlugin = require('copy-webpack-plugin')
 const { server: serverLoaders } = require('./loaders')
 const { resolvers } = require('./resolvers')
 const { getFullPath, paths } = require('../helper')
@@ -41,7 +42,10 @@ const config = {
     }),
     new webpack.optimize.LimitChunkCountPlugin({
       maxChunks: 1
-    })
+    }),
+    new CopyPlugin([
+      { from: getFullPath('translations/*'), to: paths.serverBuild }
+    ])
   ],
   optimization: {
     ...serverOptimization

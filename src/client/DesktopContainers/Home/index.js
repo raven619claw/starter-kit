@@ -3,7 +3,7 @@ import { useTheme } from 'emotion-theming'
 import { useDispatch, useSelector } from 'client/hooks/rematchHooks'
 import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 import { FormattedNumber, FormattedMessage } from 'react-intl'
-import messages from './messages'
+import messagesDefault from './messages'
 
 const mapDispatchToProps = dispatch => ({
   increment: dispatch.count.increment
@@ -12,8 +12,10 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   count: state.count
 })
-
-const Home = () => {
+// reason for passing messages like this
+// is to enable message passing in storybook
+// which can be modified
+const Home = ({ messages = messagesDefault }) => {
   const theme = useTheme()
   const { increment } = useDispatch(mapDispatchToProps)
   const { count } = useSelector(mapStateToProps)
@@ -33,6 +35,7 @@ const Home = () => {
       <div>
         <FormattedNumber value={123456789.12} />
         <br />
+        <FormattedMessage {...messages.zkvkh} />
         <FormattedMessage
           {...messages.gretting}
           values={{

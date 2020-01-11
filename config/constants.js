@@ -12,5 +12,8 @@ module.exports = {
   IGNORE_MODERN_BUILD: process.env.IGNORE_MODERN_BUILD,
   LEGACY: 'legacy',
   MODERN: 'modern',
-  SERVER: 'server'
+  SERVER: 'server',
+  LANG_ENDPOINT: process.env.LANG_ENDPOINT,
+  LANGUAGES: ['en', 'de', 'nl', 'fr'],
+  PLATFORMS: ['bvdir']
 }

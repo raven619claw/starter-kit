@@ -11,7 +11,8 @@
       "server/*": ["./src/server/*"],
       "shared/*": ["./src/shared/*"],
       "assets/*": ["./src/assets/*"],
-      "config/*": ["./config/*"]
+      "config/*": ["./config/*"],
+      "translations/*": ["./translations/*"]
     }
   }
 }

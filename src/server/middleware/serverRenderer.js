@@ -17,8 +17,8 @@ import createStore from 'shared/store'
 import setInitialState from 'server/utils/setInitialState'
 import { getTheme } from 'server/utils/theme'
 import getProxyHeaders from 'server/utils/generateHeaders'
-const { paths, logMessage } = require('config/helper')
-
+import { paths, logMessage } from 'config/helper'
+import messagesObject from 'server/utils/getTranslationsObject'
 // eslint-disable-next-line no-undef
 const statsLegacy = __non_webpack_require__(
   `${paths.clientBuild}/loadable-legacy-stats.json`
@@ -67,6 +67,9 @@ const serverRenderer = async (req, res) => {
     const proxyHeaders = getProxyHeaders({
       cookie: req.headers.cookie
     })
+    const locale = 'en'
+    const platform = 'bvdir'
+    const messages = messagesObject[platform][locale]
     const store = createStore(initialState)
     await fetchComponentData({ needs, store, proxyHeaders }) // maybe pass store here in future and other stuf
     const content = renderToString(
@@ -76,7 +79,7 @@ const serverRenderer = async (req, res) => {
             value={getEmotionCache(store.getState().deviceEnv.isRTL)}
           >
             <StaticRouter location={req.url} context={context}>
-              <IntlProvider locale="en" messages={{}}>
+              <IntlProvider locale={locale} messages={messages}>
                 <App />
               </IntlProvider>
             </StaticRouter>
