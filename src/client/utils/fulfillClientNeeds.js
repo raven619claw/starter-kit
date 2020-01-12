@@ -8,11 +8,7 @@
 // for a perfect reference see SavedHotels/Index container
 // because of this now you dont need to call APIs in componentDidMount of that route
 
-export const fulfillClientNeeds = ({
-  store,
-  location,
-  needs: needItems = []
-}) => {
+export const fulfillClientNeeds = ({ store, needs: needItems = [] }) => {
   if (!__BROWSER__) {
     return new Promise(resolve => {
       resolve()
@@ -27,8 +23,7 @@ export const fulfillClientNeeds = ({
   }
   const promises = needs.map(need =>
     need({
-      store,
-      location
+      store
     })
   )
 
@@ -36,11 +31,7 @@ export const fulfillClientNeeds = ({
 }
 // DEV: this is kinda experimental and not verified.
 // do not use
-export const fulfillClientUnmountNeeds = ({
-  store,
-  location,
-  unMountNeedItems = []
-}) => {
+export const fulfillClientUnmountNeeds = ({ store, unMountNeedItems = [] }) => {
   const unMountNeeds = []
   // const globalStore = store.getState()
   if (Object.prototype.toString.call(unMountNeedItems) === '[object Array]') {
@@ -50,8 +41,7 @@ export const fulfillClientUnmountNeeds = ({
   }
   const promises = unMountNeeds.map(unMountNeed =>
     unMountNeed({
-      store,
-      location
+      store
     })
   )
   return Promise.all(promises)
@@ -64,8 +54,8 @@ export const fulfillClientUnmountNeeds = ({
 // The needs of the route container are resolved the same way as in SSR
 // to stop if from running in SSR BROWSER check is there
 // can pass waitForApi to halt the route render till APIs are resolved
-// export const renderComponent = ({ store, module, location, cb, waitForApi }) => {
-// fulfillClientNeeds({  store, location, needItems: module.default.needs || [] }).then(() => {
+// export const renderComponent = ({ store, module, cb, waitForApi }) => {
+// fulfillClientNeeds({  store, needItems: module.default.needs || [] }).then(() => {
 // check if env is browser and waitForAPI is there then render only after promise.all resolves
 // if (__BROWSER__ && waitForApi) {
 // cb(null, module.default);
