@@ -10,7 +10,7 @@
 
 export const fulfillClientNeeds = ({
   store,
-  location,
+
   needs: needItems = []
 }) => {
   if (!__BROWSER__) {
@@ -27,8 +27,7 @@ export const fulfillClientNeeds = ({
   }
   const promises = needs.map(need =>
     need({
-      store,
-      location
+      store
     })
   )
 
@@ -38,7 +37,7 @@ export const fulfillClientNeeds = ({
 // do not use
 export const fulfillClientUnmountNeeds = ({
   store,
-  location,
+
   unMountNeedItems = []
 }) => {
   const unMountNeeds = []
@@ -50,8 +49,7 @@ export const fulfillClientUnmountNeeds = ({
   }
   const promises = unMountNeeds.map(unMountNeed =>
     unMountNeed({
-      store,
-      location
+      store
     })
   )
   return Promise.all(promises)
@@ -64,8 +62,8 @@ export const fulfillClientUnmountNeeds = ({
 // The needs of the route container are resolved the same way as in SSR
 // to stop if from running in SSR BROWSER check is there
 // can pass waitForApi to halt the route render till APIs are resolved
-// export const renderComponent = ({ store, module, location, cb, waitForApi }) => {
-// fulfillClientNeeds({  store, location, needItems: module.default.needs || [] }).then(() => {
+// export const renderComponent = ({ store, module, cb, waitForApi }) => {
+// fulfillClientNeeds({  store, needItems: module.default.needs || [] }).then(() => {
 // check if env is browser and waitForAPI is there then render only after promise.all resolves
 // if (__BROWSER__ && waitForApi) {
 // cb(null, module.default);
