@@ -4,7 +4,6 @@ import {
   fulfillClientUnmountNeeds
 } from 'client/utils/fulfillClientNeeds'
 import { getStore } from 'shared/store'
-let isServerRendered = true
 
 // not used as of now
 // need more handling
@@ -29,15 +28,16 @@ const loadData = async ({ setState, needs }) => {
     setState({ loaded: true, isError: true, err: error })
   }
 }
-
+let isServerRendered = true
+const deafaultState = {
+  loaded: true,
+  isError: false,
+  err: null
+}
 export default WrappedComponent => {
   const { needs, unMountNeeds, forceClientNeedsRefetch } = WrappedComponent
   const ContainerHOC = props => {
-    const [{ loaded, isError, err }, setState] = useState({
-      loaded: true,
-      isError: false,
-      err: null
-    })
+    const [{ loaded, isError, err }, setState] = useState(deafaultState)
     useEffect(() => {
       ;(!isServerRendered || forceClientNeedsRefetch) &&
         needs &&
