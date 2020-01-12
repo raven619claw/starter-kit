@@ -1,8 +1,11 @@
 import { init } from '@rematch/core'
-
+import createLoadingPlugin from '@rematch/loading'
 import { connectRouter, routerMiddleware } from 'connected-react-router'
 import { createBrowserHistory, createMemoryHistory } from 'history'
 import { deviceEnvModel, countModel, themeModel } from './models'
+
+const options = {}
+const loading = createLoadingPlugin(options)
 
 const createEnvHistory = url => {
   if (__SERVER__) {
@@ -34,7 +37,8 @@ const createStore = ({ deviceEnv, count = 0, theme, url }) => {
       devtoolOptions: {
         disabled: __PROD__
       }
-    }
+    },
+    plugins: [loading]
   })
   storeCreated = true
   historyCreated = true
