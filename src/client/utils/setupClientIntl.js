@@ -52,6 +52,5 @@ export default async ({ locale, polyfillRequired }) => {
     ]
   }
   const result = await Promise.all(promises)
-  console.log(result)
   return result[0]
 }
