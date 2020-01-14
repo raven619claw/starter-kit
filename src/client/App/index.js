@@ -1,6 +1,5 @@
 import { hot } from 'react-hot-loader/root'
 import React, { useEffect } from 'react'
-import { useTheme } from 'emotion-theming'
 import { useDispatch, useSelector } from 'client/hooks/rematchHooks'
 import Router from 'client/Router'
 import { Link } from 'react-router-dom'
@@ -18,7 +17,7 @@ import {
 } from 'shared/constants'
 import parser from 'ua-parser-js'
 import Theme from 'client/CommonComponents/Theme'
-import { styleContainer } from './style'
+import { style } from './style'
 import './style.scss'
 
 // this is the entry file to the react app
@@ -33,11 +32,9 @@ const mapStateToProps = ({ deviceEnv: { deviceType } }) => ({
 })
 
 const App = () => {
-  const theme = useTheme()
   const { updateDeviceInfo } = useDispatch(mapDispatchToProps)
   const { deviceType } = useSelector(mapStateToProps)
   // memo this
-  const { style } = styleContainer(theme)
   // can move this to it's own hook but seems over engg.
   // as this won't be used anywhere else
   useEffect(() => {
