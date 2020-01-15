@@ -21,7 +21,6 @@ import { style } from './style'
 import './style.scss'
 
 // this is the entry file to the react app
-// keeping this as a class compoent for example purposes
 
 const mapDispatchToProps = ({ deviceEnv: { updateDeviceInfo } }) => ({
   updateDeviceInfo
@@ -30,7 +29,6 @@ const mapDispatchToProps = ({ deviceEnv: { updateDeviceInfo } }) => ({
 const mapStateToProps = ({ deviceEnv: { deviceType } }) => ({
   deviceType
 })
-
 const App = () => {
   const { updateDeviceInfo } = useDispatch(mapDispatchToProps)
   const { deviceType } = useSelector(mapStateToProps)
