@@ -10,6 +10,7 @@ dev/
 .dev/
 react-loadable.json
 translations/
+coverage/
 #dump
 *dump.rdb
 npm-debug.log
