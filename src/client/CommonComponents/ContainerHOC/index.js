@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import {
   fulfillClientNeeds,
   fulfillClientUnmountNeeds
@@ -14,7 +14,7 @@ const deleteData = async ({ unMountNeeds }) => {
     unMountNeedItems: unMountNeeds
   })
 }
-const loadData = async ({ setState, needs }) => {
+const loadData = async ({ isMounted, setState, needs }) => {
   setState({ loaded: false, isError: false, err: null })
   const store = getStore()
   try {
@@ -22,10 +22,10 @@ const loadData = async ({ setState, needs }) => {
       store,
       needs
     })
-    setState({ loaded: true, isError: false, err: null })
+    isMounted.current && setState({ loaded: true, isError: false, err: null })
     window.scrollTo(0, 0)
   } catch (error) {
-    setState({ loaded: true, isError: true, err: error })
+    isMounted.current && setState({ loaded: true, isError: true, err: error })
   }
 }
 let isServerRendered = true
@@ -37,13 +37,18 @@ const deafaultState = {
 export default WrappedComponent => {
   const { needs, unMountNeeds, forceClientNeedsRefetch } = WrappedComponent
   const ContainerHOC = props => {
+    const isMounted = useRef(false)
     const [{ loaded, isError, err }, setState] = useState(deafaultState)
     useEffect(() => {
+      isMounted.current = true
       ;(!isServerRendered || forceClientNeedsRefetch) &&
         needs &&
-        loadData({ setState, needs })
+        loadData({ isMounted, setState, needs })
       isServerRendered = false
-      return () => unMountNeeds && deleteData({ unMountNeeds })
+      return () => {
+        isMounted.current = false
+        unMountNeeds && deleteData({ unMountNeeds })
+      }
       // only call effect when location object changes
       // as that is the only time we want the data to auto change
     }, [])
