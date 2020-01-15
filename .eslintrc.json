@@ -31,7 +31,11 @@
     "PORT": false,
     "__INITIAL_STATE__": false,
     "__THEME__": false,
-    "__IGNORE_MODERN_BUILD__": false
+    "__IGNORE_MODERN_BUILD__": false,
+    "test": false,
+    "expect": false,
+    "afterEach": false,
+    "it": false
   },
   "rules": {
     "curly": ["error", "all"],

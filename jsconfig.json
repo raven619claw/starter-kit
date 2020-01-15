@@ -11,7 +11,8 @@
       "server/*": ["./src/server/*"],
       "shared/*": ["./src/shared/*"],
       "assets/*": ["./src/assets/*"],
-      "config/*": ["./config/*"]
+      "config/*": ["./config/*"],
+      "test-utils": ["./src/shared/utils/test-utils.js"]
     }
   }
 }

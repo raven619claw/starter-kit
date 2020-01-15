@@ -1,0 +1,16 @@
+//THIS IS SPECIFICALLY SET FOR JEST
+//FOR WEBPACK ALL BABEL CONFIG IS DEFINED INSIDE config/webpack/loaders.js
+//IF U CHANGE ANY BABEL OPTIONS IN WEBPACK FOR CLIENT IT NEEDS TO BE ADDED HERE AS WELL
+
+{
+  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    "@babel/plugin-syntax-dynamic-import",
+    "@babel/plugin-proposal-class-properties",
+    "@loadable/babel-plugin",
+    "react-hot-loader/babel",
+    "@babel/plugin-proposal-export-default-from",
+    "@babel/plugin-transform-runtime"
+  ]
+}
