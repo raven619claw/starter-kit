@@ -52,7 +52,7 @@ const babelLoader = ({ type = LEGACY, PROD }) => {
     plugins.push('@babel/plugin-transform-runtime')
   }
   if (PROD) {
-    // TODO: add plugin to remove test ids
+    plugins.push(['react-remove-properties', { properties: ['data-testid'] }])
     plugins.push('transform-remove-console')
     plugins.push([
       'transform-react-remove-prop-types',
