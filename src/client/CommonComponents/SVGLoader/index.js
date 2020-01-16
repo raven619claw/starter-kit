@@ -7,7 +7,7 @@ import { style } from './style'
 // cache this in service worker or something
 const imageCache = {}
 const SVGLoader = props => {
-  const { src, lazyLoad, className, ...propsToAppendToElement } = props
+  const { src, lazyLoad, ...propsToAppendToElement } = props
   const [externalSvg, setExternalSvg] = useState(null)
   let isExternalLink = false
   if (src.substr(0, 4) !== 'data') {
@@ -49,7 +49,6 @@ const SVGLoader = props => {
   // use propsToAppendToEl to delete any prop you dont want showing in DOM
   return (
     <div
-      className={className}
       css={style}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...propsToAppendToElement}
@@ -61,15 +60,11 @@ const SVGLoader = props => {
 
 SVGLoader.propTypes = {
   src: PropTypes.string.isRequired,
-  lazyLoad: PropTypes.bool,
-  className: PropTypes.string,
-  svgcss: PropTypes.object
+  lazyLoad: PropTypes.bool
 }
 
 SVGLoader.defaultProps = {
-  lazyLoad: false,
-  className: '',
-  svgcss: {}
+  lazyLoad: false
 }
 
 export default SVGLoader

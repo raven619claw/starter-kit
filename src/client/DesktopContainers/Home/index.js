@@ -3,7 +3,8 @@ import { useTheme } from 'emotion-theming'
 import { useDispatch, useSelector } from 'client/hooks/rematchHooks'
 import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 import { FormattedNumber, FormattedMessage } from 'react-intl'
-import { Alert, Test } from './media'
+import IconLoader from 'client/CommonComponents/SVGLoader'
+import Alert from 'assets/svg/alert.svg'
 import messages from './messages'
 import { styleIcon } from './style'
 
@@ -28,8 +29,7 @@ const Home = () => {
   }, [])
   return (
     <div>
-      <Alert css={styleIcon} />
-      <Test />
+      <IconLoader css={styleIcon} src={Alert} />
       Home Desktop :{' '}
       <span>
         {count.toString()},{JSON.stringify(theme)}
