@@ -3,7 +3,11 @@
 //IF U CHANGE ANY BABEL OPTIONS IN WEBPACK FOR CLIENT IT NEEDS TO BE ADDED HERE AS WELL
 
 {
-  "presets": ["@babel/preset-env", "@babel/preset-react"],
+  "presets": [
+    "@babel/preset-env",
+    "@babel/preset-react",
+    "@emotion/babel-preset-css-prop"
+  ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-syntax-dynamic-import",

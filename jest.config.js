@@ -1,4 +1,5 @@
 module.exports = {
+  verbose: true,
   moduleFileExtensions: ['js'],
   moduleDirectories: ['node_modules', 'src/shared/utils'],
   // to have same resolvers as webpack add them here

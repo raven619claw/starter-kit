@@ -1,5 +1,8 @@
 import { render } from '@testing-library/react'
 import '@testing-library/jest-dom/extend-expect'
+import serializer from 'jest-emotion'
+
+expect.addSnapshotSerializer(serializer)
 // add the theme and translations object and store here
 const AllTheProviders = ({ children }) => children
 
