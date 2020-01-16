@@ -18,7 +18,7 @@ const SVGLoader = props => {
       if (imageCache[src]) {
         setExternalSvg(imageCache[src])
       } else {
-        const { data } = (await axios.get(src)).data
+        const { data } = await axios.get(src)
         imageCache[src] = data
         setExternalSvg(imageCache[src])
       }
