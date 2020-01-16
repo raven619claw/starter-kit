@@ -7,7 +7,7 @@ import { style } from './style'
 // cache this in service worker or something
 const imageCache = {}
 const SVGLoader = props => {
-  const { src, lazyLoad, svgcss, className, ...propsToAppendToElement } = props
+  const { src, lazyLoad, className, ...propsToAppendToElement } = props
   const [externalSvg, setExternalSvg] = useState(null)
   let isExternalLink = false
   if (src.substr(0, 4) !== 'data') {
@@ -50,7 +50,7 @@ const SVGLoader = props => {
   return (
     <div
       className={className}
-      css={[style, svgcss]}
+      css={style}
       // eslint-disable-next-line react/jsx-props-no-spreading
       {...propsToAppendToElement}
       // eslint-disable-next-line react/no-danger

@@ -21,6 +21,7 @@
     "test": "jest",
     "test:commit": "jest --bail --findRelatedTests",
     "test:coverage": "jest --coverage",
+    "test:update": "jest --u",
     "test:watch": "jest --watch"
   },
   "author": "",
@@ -128,7 +129,6 @@
     "path": "^0.12.7",
     "prop-types": "^15.7.2",
     "react": "^16.11.0",
-    "react-auto-bind": "^0.4.2",
     "react-dom": "^16.11.0",
     "react-helmet-async": "^1.0.4",
     "react-hot-loader": "^4.12.18",
