@@ -5,21 +5,21 @@
 // can also dynamically load polyfills based on browser
 // import '@formatjs/intl-pluralrules/polyfill'
 // import '@formatjs/intl-relativetimeformat/polyfill'
-import axios from 'axios'
+import fetch from 'unfetch'
 
 // load all the locale and messages data here
 const prod = true // __PROD__ dev does not work without VPN
 export default async ({ locale, polyfillRequired }) => {
-  const messagesCall = axios
-    .get(
-      `https://${
-        prod ? 'www' : 'dev'
-        // extend the API to handle platform logic to support oyodir
-      }.belvilla.com/api/v1/translations/${locale}`
-    )
-    .then(result => {
+  const messagesCall = fetch(
+    `https://${
+      prod ? 'www' : 'dev'
+      // extend the API to handle platform logic to support oyodir
+    }.belvilla.com/api/v1/translations/${locale}`
+  )
+    .then(response => response.json())
+    .then(data => {
       const map = {}
-      result.data.forEach(row => {
+      data.forEach(row => {
         map[row.code] = row.content
       })
       return map
