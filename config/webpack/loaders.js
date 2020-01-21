@@ -120,22 +120,32 @@ const cssLoaderClient = ({ PROD }) => ({
 const cssLoaderServer = {
   test: cssRegex,
   exclude: cssModuleRegex,
-  use: [{ loader: require.resolve('ignore-loader') }]
+  use: [{ loader: 'ignore-loader' }]
 }
 
 const clientModernIgnoreLoader = {
   test: /\.(png|jpe?g|gif|svg|scss|css)$/,
-  use: [{ loader: require.resolve('ignore-loader') }]
+  use: [{ loader: 'ignore-loader' }]
 }
-// for some reason for greater size it does not default to file-loader
-// but just creates the path itself
+
 const urlLoaderClient = ({ PROD }) => ({
   test: /\.(png|jpe?g|gif|svg)$/,
-  loader: require.resolve('url-loader'),
+  loader: 'url-loader',
   options: {
     limit: 10000, // this is not to generate assets for less than 10kb
     name: `media/[name]${(PROD && '.[hash:8]') || ''}.[ext]`,
     fallback: 'file-loader'
+  }
+})
+
+const assetOptimizeLoaderClient = () => ({
+  test: /\.(gif|png|jpe?g|svg)$/i,
+  loader: 'image-webpack-loader',
+  options: {
+    // TODO: test out webp compression
+    // webp: {
+    //   quality: 75
+    // }
   }
 })
 
@@ -147,57 +157,23 @@ const urlLoaderServer = ({ PROD }) => ({
   }
 })
 
-const fileLoaderClient = {
-  exclude: [/\.(js|css|mjs|html|json)$/], // any assets which is not in the one mentioned.
-  use: [
-    {
-      loader: require.resolve('file-loader'),
-      options: {
-        name: 'media/[name].[hash:8].[ext]'
-      }
-    }
-  ]
-}
-
-const fileLoaderServer = {
-  exclude: [/\.(js|css|mjs|html|json)$/],
-  use: [
-    {
-      loader: require.resolve('file-loader'),
-      options: {
-        name: 'media/[name].[hash:8].[ext]',
-        emitFile: false
-      }
-    }
-  ]
-}
-
 const client = ({ PROD }) => [
-  {
-    oneOf: [
-      babelLoader({ PROD, type: LEGACY }),
-      cssLoaderClient({ PROD }),
-      urlLoaderClient({ PROD }),
-      fileLoaderClient
-    ]
-  }
+  babelLoader({ PROD, type: LEGACY }),
+  cssLoaderClient({ PROD }),
+  urlLoaderClient({ PROD }),
+  assetOptimizeLoaderClient({ PROD })
 ]
 const server = ({ PROD }) => [
-  {
-    oneOf: [
-      babelLoader({ PROD, type: SERVER }),
-      cssLoaderServer,
-      urlLoaderServer({ PROD }),
-      fileLoaderServer
-    ]
-  }
+  babelLoader({ PROD, type: SERVER }),
+  cssLoaderServer,
+  urlLoaderServer({ PROD }),
+  assetOptimizeLoaderClient({ PROD })
 ]
 const modernClient = ({ PROD }) => [
-  {
-    // to get modern config to spit css chunks which can be read by loadable-components stats
-    // we need to keep this same as client config
-    oneOf: [babelLoader({ PROD, type: MODERN }), clientModernIgnoreLoader]
-  }
+  // to get modern config to spit css chunks which can be read by loadable-components stats
+  // we need to keep this same as client config
+  babelLoader({ PROD, type: MODERN }),
+  clientModernIgnoreLoader
 ]
 module.exports = {
   client,
