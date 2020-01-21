@@ -75,6 +75,7 @@
     "husky": "^3.1.0",
     "identity-obj-proxy": "^3.0.0",
     "ignore-loader": "^0.1.2",
+    "image-webpack-loader": "^6.0.0",
     "jest": "^24.9.0",
     "jest-emotion": "^10.0.27",
     "jsdom-global": "^3.0.2",

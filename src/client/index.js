@@ -1,5 +1,5 @@
 import 'react-hot-loader'
-import React from 'react'
+import React, { StrictMode } from 'react'
 import { loadableReady } from '@loadable/component'
 import { hydrate } from 'react-dom'
 import App from 'client/App'
@@ -16,15 +16,19 @@ const history = getHistory()
 
 const appRender = ({ AppComponent, messages }) => {
   hydrate(
-    <Provider store={store}>
-      <CacheProvider value={getEmotionCache(store.getState().deviceEnv.isRTL)}>
-        <ConnectedRouter history={history}>
-          <IntlProvider locale="en" messages={messages}>
-            <AppComponent />
-          </IntlProvider>
-        </ConnectedRouter>
-      </CacheProvider>
-    </Provider>,
+    <StrictMode>
+      <Provider store={store}>
+        <CacheProvider
+          value={getEmotionCache(store.getState().deviceEnv.isRTL)}
+        >
+          <ConnectedRouter history={history}>
+            <IntlProvider locale="en" messages={messages}>
+              <AppComponent />
+            </IntlProvider>
+          </ConnectedRouter>
+        </CacheProvider>
+      </Provider>
+    </StrictMode>,
     document.getElementById('root')
   )
 }
