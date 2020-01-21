@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import atob from 'shared/utils/atob'
-import axios from 'axios'
+import fetch from 'unfetch'
 import PropTypes from 'prop-types'
 import { style } from './style'
 
@@ -18,7 +18,8 @@ const SVGLoader = props => {
       if (imageCache[src]) {
         setExternalSvg(imageCache[src])
       } else {
-        const { data } = await axios.get(src)
+        const response = await fetch(src)
+        const data = await response.text()
         imageCache[src] = data
         setExternalSvg(imageCache[src])
       }
