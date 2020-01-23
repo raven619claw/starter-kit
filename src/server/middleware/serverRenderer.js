@@ -69,7 +69,7 @@ const serverRenderer = async (req, res) => {
       cookie: req.headers.cookie
     })
     const store = createStore(initialState)
-    await fetchComponentData({ needs, store, proxyHeaders }) // maybe pass store here in future and other stuf
+    await fetchComponentData({ needs, store, proxyHeaders })
     const content = renderToString(
       extractor.collectChunks(
         <Provider store={store}>
