@@ -1,3 +1,3 @@
-export default ({ cookies }) => ({
-  cookies
+export default ({ cookie }) => ({
+  cookie
 })

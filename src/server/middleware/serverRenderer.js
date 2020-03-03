@@ -72,7 +72,7 @@ const serverRenderer = async (req, res) => {
     const platform = 'bvdir'
     const messages = messagesObject[platform][locale]
     const store = createStore(initialState)
-    await fetchComponentData({ needs, store, proxyHeaders }) // maybe pass store here in future and other stuf
+    await fetchComponentData({ needs, store, proxyHeaders })
     const content = renderToString(
       extractor.collectChunks(
         <Provider store={store}>

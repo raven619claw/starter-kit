@@ -49,7 +49,7 @@ export default WrappedComponent => {
         isMounted.current = false
         unMountNeeds && deleteData({ unMountNeeds })
       }
-      // only call effect when location object changes
+      // in future only call effect when location object changes
       // as that is the only time we want the data to auto change
     }, [])
 
