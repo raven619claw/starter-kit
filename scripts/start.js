@@ -1,5 +1,6 @@
 const nodemon = require('nodemon')
 const express = require('express')
+const compression = require('compression')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 const { paths, logMessage } = require('../config/helper')
@@ -12,7 +13,7 @@ const start = async () => {
     ignored: /node_modules/,
     stats: clientConfig.stats
   }
-
+  app.use(compression())
   app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*')
     return next()

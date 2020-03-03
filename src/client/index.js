@@ -14,6 +14,9 @@ const initialState = __INITIAL_STATE__
 const store = createStore(initialState)
 const history = getHistory()
 
+// get both these values from initial store
+const locale = 'en'
+const platform = 'bvdir'
 const appRender = ({ AppComponent, messages }) => {
   hydrate(
     <StrictMode>
@@ -22,7 +25,7 @@ const appRender = ({ AppComponent, messages }) => {
           value={getEmotionCache(store.getState().deviceEnv.isRTL)}
         >
           <ConnectedRouter history={history}>
-            <IntlProvider locale="en" messages={messages}>
+            <IntlProvider locale={locale} messages={messages}>
               <AppComponent />
             </IntlProvider>
           </ConnectedRouter>
@@ -52,7 +55,8 @@ if ('serviceWorker' in navigator) {
 }
 
 loadableReady(async () => {
+  const polyfillRequired = true
   // add logic to load all localization data inside this
-  const messages = await loadIntl()
+  const messages = await loadIntl({ locale, platform, polyfillRequired })
   appRender({ AppComponent: App, messages })
 })
