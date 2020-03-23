@@ -1,0 +1,6 @@
+.git
+node_modules
+translations
+sample.env
+.dev
+.build
