@@ -3,7 +3,6 @@ global.DOMParser = new (require('jsdom').JSDOM)().window.DOMParser
 require('dotenv').config()
 require('full-icu')
 import path from 'path'
-import compression from 'compression'
 import express from 'express'
 import cors from 'cors'
 import manifestHelpers from 'express-manifest-helpers'
@@ -16,9 +15,6 @@ import setupServerIntl from 'server/service/setupServerIntl'
 const app = express()
 app.get('/favicon.ico', (req, res) => res.sendStatus(204))
 app.use(cors())
-// NEVER SERVE FILES FROM NODE
-// ALL PATHS FOR ASSETS SHOULD BE FROM CDN
-app.use(compression())
 app.use(paths.publicPath, express.static(path.join(paths.clientBuild)))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))

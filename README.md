@@ -1,6 +1,6 @@
 # starter-kit(WIP)
 
-THIS BRANCH IS SPECIFIC SETUP FOR INTL IN BELVILLA
+The no bullshit starter kit for React
 
 1. webpack 4
 2. Babel 7

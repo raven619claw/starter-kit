@@ -12,7 +12,6 @@
       "shared/*": ["./src/shared/*"],
       "assets/*": ["./src/assets/*"],
       "config/*": ["./config/*"],
-      "translations/*": ["./translations/*"],
       "test-utils": ["./src/shared/utils/test-utils.js"]
     }
   }

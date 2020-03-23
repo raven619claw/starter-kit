@@ -5,7 +5,7 @@ import ContainerHOC from 'client/CommonComponents/ContainerHOC'
 import { FormattedNumber, FormattedMessage } from 'react-intl'
 import IconLoader from 'client/CommonComponents/SVGLoader'
 import Alert from 'assets/svg/alert.svg'
-import messagesDefault from './messages'
+import messages from './messages'
 import { styleIcon } from './style'
 
 const mapDispatchToProps = dispatch => ({
@@ -15,10 +15,8 @@ const mapDispatchToProps = dispatch => ({
 const mapStateToProps = state => ({
   count: state.count
 })
-// reason for passing messages like this
-// is to enable message passing in storybook
-// which can be modified
-const Home = ({ messages = messagesDefault }) => {
+
+const Home = () => {
   const theme = useTheme()
   const { increment } = useDispatch(mapDispatchToProps)
   const { count } = useSelector(mapStateToProps)
@@ -39,7 +37,6 @@ const Home = ({ messages = messagesDefault }) => {
       <div>
         <FormattedNumber value={123456789.12} />
         <br />
-        <FormattedMessage {...messages.zkvkh} />
         <FormattedMessage
           {...messages.gretting}
           values={{

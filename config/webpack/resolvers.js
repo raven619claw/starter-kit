@@ -12,7 +12,6 @@ const resolvers = {
     server: getFullPath('src/server'),
     shared: getFullPath('src/shared'),
     assets: getFullPath('src/assets'),
-    translations: getFullPath('translations'),
     config: getFullPath('config'),
     'react-dom': '@hot-loader/react-dom',
     // this has be added to resolve canvas js used by jsdom for intl formatting on server
