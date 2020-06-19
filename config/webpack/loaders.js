@@ -161,12 +161,14 @@ const client = ({ PROD }) => [
   babelLoader({ PROD, type: LEGACY }),
   cssLoaderClient({ PROD }),
   urlLoaderClient({ PROD }),
+  // TODO: breaks in alpine docker file
   assetOptimizeLoaderClient({ PROD })
 ]
 const server = ({ PROD }) => [
   babelLoader({ PROD, type: SERVER }),
   cssLoaderServer,
   urlLoaderServer({ PROD }),
+  // TODO: breaks in alpine docker file
   assetOptimizeLoaderClient({ PROD })
 ]
 const modernClient = ({ PROD }) => [
