@@ -12,6 +12,8 @@ The no bullshit starter kit for React
 8. Storybook
 9. React Intl(no extraction for msg setup. That is up to the developer)
 
+CREATE .env file from sample
+
 TO RUN: `yarn start:dev:inspect`
 
 BUILD PROD: `yarn build:prod`
