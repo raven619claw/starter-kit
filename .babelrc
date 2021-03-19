@@ -7,7 +7,7 @@
     "@babel/preset-env",
     "@babel/preset-react",
     "@emotion/babel-preset-css-prop"
-  ],
+  ],asdasdasdas
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     "@babel/plugin-syntax-dynamic-import",
